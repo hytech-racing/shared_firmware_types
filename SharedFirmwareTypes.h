@@ -74,23 +74,6 @@ struct xy_vec
     T y;
 };
 
-
-
-
-
-/**
- * Struct containing ALL of the data from the VCF Interfaces. An instance of this struct will be
- * passed into each of VCF's systems as an input.
- */
-struct VCFInterfaceData_s
-{
-    PedalsUnfiltered_s pedals_unfiltered;
-    FrontLoadCellsUnfiltered_s front_loadcells_unfiltered;
-    FrontSusPotsUnfiltered_s front_suspots_unfiltered;
-    SteeringUnfiltered_s steering_unfiltered;
-    DashInputState_s dash_input_state; // Direct button signals from the dashboard IOExpander
-};
-
 struct PedalsUnfiltered_s
 {
     float accel1_unfiltered_percent;
@@ -120,19 +103,6 @@ struct SteeringUnfiltered_s
     float digital_steering_unfiltered_degrees;
 };
 
-struct DashInputState_s
-{
-    bool dim_btn_is_pressed : 1;
-    bool preset_btn_is_pressed : 1;
-    bool mc_reset_btn_is_pressed : 1; // Resets the motor controller errors
-    bool mode_btn_is_pressed : 1; // Currently un-used (dial state instead)
-    bool start_btn_is_pressed : 1; // The start button is the READY_TO_DRIVE button
-    bool data_btn_is_pressed : 1;
-    bool left_paddle_is_pressed : 1; // Paddle shifters were not on HT08, but the code is compatible with them.
-    bool right_paddle_is_pressed : 1; // Paddle shifters were not on HT08, but the code is compatible with them.
-    ControllerMode_e dial_state;
-};
-
 /**
  * Enum for the modes on the dial, corresponds directly to dial index position.
  */
@@ -146,22 +116,17 @@ enum class ControllerMode_e
     MODE_5,
 };
 
-
-
-
-
-/**
- * Struct containing ALL of the VCF systems' data. An instance of this struct, along with an instance
- * of the interface data struct, will be passed into the VCF interfaces so they can send the data
- * out towards other microcontrollers.
- */
-struct VCFSystemData_s
+struct DashInputState_s
 {
-    PedalsSystemData_s pedals_system_data;
-    FrontLoadCellsFiltered_s front_loadcells_filtered;
-    FrontSusPotsFiltered_s front_suspots_filtered;
-    SteeringFiltered_s steering_filtered;
-    DashDisplayState_s dash_display;
+    bool dim_btn_is_pressed : 1;
+    bool preset_btn_is_pressed : 1;
+    bool mc_reset_btn_is_pressed : 1; // Resets the motor controller errors
+    bool mode_btn_is_pressed : 1; // Currently un-used (dial state instead)
+    bool start_btn_is_pressed : 1; // The start button is the READY_TO_DRIVE button
+    bool data_btn_is_pressed : 1;
+    bool left_paddle_is_pressed : 1; // Paddle shifters were not on HT08, but the code is compatible with them.
+    bool right_paddle_is_pressed : 1; // Paddle shifters were not on HT08, but the code is compatible with them.
+    ControllerMode_e dial_state;
 };
 
 /**
@@ -213,31 +178,6 @@ struct SteeringFiltered_s
 struct DashDisplayState_s
 {
     int dash_data = -1;
-};
-
-
-
-
-
-/**
- * Struct containing ALL of the VCR interfaces' data. An instance of this struct  will be passed into the VCR
- * systems before calling their tick() methods.
- */
-struct VCRInterfaceData_s
-{
-    RearLoadCellsUnfiltered_s rear_loadcells_unfiltered;
-    RearSusPotsUnfiltered_s rear_suspots_unfiltered;
-    VectorNavData_s vectornav_data;
-    CurrentSensorData_s current_sensor_data;
-    ShutdownSensingData_s shutdown_sensing_data;
-    EthernetLinkData_s ethernet_is_linked;
-    veh_vec<InverterData_s> inverter_data;
-    PedalsSystemData_s pedals_system_data;
-    FrontLoadCellsFiltered_s front_loadcells_filtered;
-    FrontSusPotsFiltered_s front_suspots_filtered;
-    SteeringFiltered_s steering_filtered;
-    DashInputState_s dash_input_state;
-
 };
 
 struct RearLoadCellsUnfiltered_s
@@ -360,21 +300,6 @@ struct EnergyMeterData_s
     float em_voltage; // Voltage, in volts, from the EM.
 };
 
-
-
-
-/**
- * Struct containing ALL of the VCR systems' data. An instance of this struct, along with an instance
- * of the interface data struct, will be passed into the VCR interfaces so they can send the data
- * out towards other microcontrollers.
- */
-struct VCRSystemData_s
-{
-    RearLoadCellsFiltered_s rear_loadcells_filtered;
-    RearSusPotsFiltered_s rear_suspots_filtered;
-    SafetySystemData_s safety_system_data;
-};
-
 struct RearLoadCellsFiltered_s
 {
     float RL_loadcell_filtered_pounds;
@@ -395,6 +320,65 @@ struct RearSusPotsFiltered_s
 struct SafetySystemData_s
 {
     bool software_is_ok : 1;
+};
+
+/**
+ * Struct containing ALL of the data from the VCF Interfaces. An instance of this struct will be
+ * passed into each of VCF's systems as an input.
+ */
+struct VCFInterfaceData_s
+{
+    PedalsUnfiltered_s pedals_unfiltered;
+    FrontLoadCellsUnfiltered_s front_loadcells_unfiltered;
+    FrontSusPotsUnfiltered_s front_suspots_unfiltered;
+    SteeringUnfiltered_s steering_unfiltered;
+    DashInputState_s dash_input_state; // Direct button signals from the dashboard IOExpander
+};
+
+/**
+ * Struct containing ALL of the VCF systems' data. An instance of this struct, along with an instance
+ * of the interface data struct, will be passed into the VCF interfaces so they can send the data
+ * out towards other microcontrollers.
+ */
+struct VCFSystemData_s
+{
+    PedalsSystemData_s pedals_system_data;
+    FrontLoadCellsFiltered_s front_loadcells_filtered;
+    FrontSusPotsFiltered_s front_suspots_filtered;
+    SteeringFiltered_s steering_filtered;
+    DashDisplayState_s dash_display;
+};
+
+/**
+ * Struct containing ALL of the VCR interfaces' data. An instance of this struct  will be passed into the VCR
+ * systems before calling their tick() methods.
+ */
+struct VCRInterfaceData_s
+{
+    RearLoadCellsUnfiltered_s rear_loadcells_unfiltered;
+    RearSusPotsUnfiltered_s rear_suspots_unfiltered;
+    VectorNavData_s vectornav_data;
+    CurrentSensorData_s current_sensor_data;
+    ShutdownSensingData_s shutdown_sensing_data;
+    EthernetLinkData_s ethernet_is_linked;
+    veh_vec<InverterData_s> inverter_data;
+    PedalsSystemData_s pedals_system_data;
+    FrontLoadCellsFiltered_s front_loadcells_filtered;
+    FrontSusPotsFiltered_s front_suspots_filtered;
+    SteeringFiltered_s steering_filtered;
+    DashInputState_s dash_input_state;
+};
+
+/**
+ * Struct containing ALL of the VCR systems' data. An instance of this struct, along with an instance
+ * of the interface data struct, will be passed into the VCR interfaces so they can send the data
+ * out towards other microcontrollers.
+ */
+struct VCRSystemData_s
+{
+    RearLoadCellsFiltered_s rear_loadcells_filtered;
+    RearSusPotsFiltered_s rear_suspots_filtered;
+    SafetySystemData_s safety_system_data;
 };
 
 #endif // __SHAREDFIRMWARETYPES_H__
