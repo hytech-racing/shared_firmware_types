@@ -11,8 +11,5 @@
         "name": "Justin Hwang",
         "email": "justin@goliath.org"
       }
-    ],
-    "build": {
-      "includeDir": "inc"
-    }
+    ]
 }
