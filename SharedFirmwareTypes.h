@@ -3,12 +3,21 @@
 #include <stdint.h>
 #include <array>
 
+/**
+ * AnalogSensorStatus_e gets packaged along with the AnalogConversion_s struct as
+ * the output of an AnalogChannel.
+ */
 enum class AnalogSensorStatus_e
 {
     ANALOG_SENSOR_GOOD = 0,
     ANALOG_SENSOR_CLAMPED = 1,
 };
 
+/**
+ * The AnalogConversion_s is the output struct for an AnalogChannel. It includes
+ * the original analog value (for debugging purposes), the converted value according
+ * to the configured scale, offset, and clamp, and the status (good or clamped).
+ */
 struct AnalogConversion_s
 {
     int raw;
@@ -16,6 +25,11 @@ struct AnalogConversion_s
     AnalogSensorStatus_e status;
 };
 
+/**
+ * The AnalogConversionPacket_s is the output of an AnalogMultiSensor, which includes
+ * each channel's output packet (an AnalogConversion_s). This is templated to account
+ * for multi-sensors with different numbers of channels (2, 4, 8-channel ADCs).
+ */
 template <int N>
 struct AnalogConversionPacket_s
 {
