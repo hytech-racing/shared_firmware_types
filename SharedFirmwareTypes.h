@@ -192,6 +192,7 @@ struct SteeringFiltered_s
 struct DashDisplayState_s
 {
     int dash_data = -1;
+    bool buzzer_is_active : 1;
 };
 
 struct RearLoadCellsUnfiltered_s
