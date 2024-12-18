@@ -192,7 +192,6 @@ struct SteeringFiltered_s
 struct DashDisplayState_s
 {
     int dash_data = -1;
-    bool buzzer_is_active : 1;
 };
 
 struct RearLoadCellsUnfiltered_s
@@ -394,6 +393,7 @@ struct VCRSystemData_s
     RearLoadCellsFiltered_s rear_loadcells_filtered;
     RearSusPotsFiltered_s rear_suspots_filtered;
     SafetySystemData_s safety_system_data;
+    bool buzzer_is_active : 1;
 };
 
 #endif // __SHAREDFIRMWARETYPES_H__
