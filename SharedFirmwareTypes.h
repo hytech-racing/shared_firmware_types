@@ -376,11 +376,6 @@ struct VCRInterfaceData_s
     ShutdownSensingData_s shutdown_sensing_data;
     EthernetLinkData_s ethernet_is_linked;
     veh_vec<InverterData_s> inverter_data;
-    PedalsSystemData_s pedals_system_data;
-    FrontLoadCellsFiltered_s front_loadcells_filtered;
-    FrontSusPotsFiltered_s front_suspots_filtered;
-    SteeringFiltered_s steering_filtered;
-    DashInputState_s dash_input_state;
 };
 
 /**
@@ -393,6 +388,11 @@ struct VCRSystemData_s
     RearLoadCellsFiltered_s rear_loadcells_filtered;
     RearSusPotsFiltered_s rear_suspots_filtered;
     SafetySystemData_s safety_system_data;
+    PedalsSystemData_s pedals_system_data;
+    FrontLoadCellsFiltered_s front_loadcells_filtered;
+    FrontSusPotsFiltered_s front_suspots_filtered;
+    SteeringFiltered_s steering_filtered;
+    DashInputState_s dash_input_state;
     bool buzzer_is_active : 1;
 };
 
