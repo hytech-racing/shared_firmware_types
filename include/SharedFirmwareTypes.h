@@ -3,6 +3,10 @@
 #include <stdint.h>
 #include <array>
 
+
+using speed_rpm = float;
+using torque_nm = float;
+
 /**
  * AnalogSensorStatus_e gets packaged along with the AnalogConversion_s struct as
  * the output of an AnalogChannel.
@@ -336,6 +340,63 @@ struct SafetySystemData_s
     bool software_is_ok : 1;
 };
 
+/// @brief Defines modes of torque limit to be processed in torque limit map for exact values.
+enum class TorqueLimit_e
+{
+    TCMUX_FULL_TORQUE = 0,
+    TCMUX_MID_TORQUE = 1,
+    TCMUX_LOW_TORQUE = 2,
+    TCMUX_NUM_TORQUE_LIMITS = 3,
+};
+
+/// @brief Defines errors for TC Mux to use to maintain system safety
+enum class TorqueControllerMuxError_e
+{
+    NO_ERROR = 0,
+    ERROR_SPEED_DIFF_TOO_HIGH = 1,
+    ERROR_TORQUE_DIFF_TOO_HIGH = 2,
+    ERROR_CONTROLLER_INDEX_OUT_OF_BOUNDS =3,
+    ERROR_CONTROLLER_NULL_POINTER =4
+};
+
+/// @brief packages TC Mux indicators: errors, mode, torque limit, bypass
+struct TorqueControllerMuxStatus_s
+{
+    TorqueControllerMuxError_e active_error;
+    ControllerMode_e active_controller_mode;
+    TorqueLimit_e active_torque_limit_enum;
+    float active_torque_limit_value;
+    bool output_is_bypassing_limits;
+};
+
+/// @brief Stores setpoints for a command to the Drivetrain, containing speed and torque setpoints for each motor. These setpoints are defined in the torque controllers cycled by the TC Muxer. 
+/// The Speeds unit is rpm and are the targeted speeds for each wheel of the car.
+/// The torques unit is nm and is the max torque requested from the inverter to reach such speeds.
+/// One can use the arrays with FR(Front Left), FL(Front Left), RL(Rear Left), RR(Rear Right)  to access or modify the respective set points. eg. speeds_rpm[FR] = 0.0;
+/// Their indexes are defined in utility.h as follows: FL = 0, FR = 1, RL = 2, RR = 3.
+struct DrivetrainCommand_s
+{
+    float speeds_rpm[4];
+    float inverter_torque_limit[4]; 
+};
+
+/// @brief Packages drivetrain command with ready boolean to give feedback on controller successfully evaluating
+/// @note returned by all car controllers evaluate method 
+struct TorqueControllerOutput_s
+{
+    DrivetrainCommand_s command;
+    bool ready;
+};
+
+struct DrivetrainDynamicReport_s
+{
+    uint16_t measuredInverterFLPackVoltage;
+    speed_rpm measuredSpeeds[4]; // rpm
+    torque_nm measuredTorques[4];
+    float measuredTorqueCurrents[4];
+    float measuredMagnetizingCurrents[4];
+};
+
 /**
  * Struct containing ALL of the data from the VCF Interfaces. An instance of this struct will be
  * passed into each of VCF's systems as an input.
@@ -385,15 +446,18 @@ struct VCRInterfaceData_s
  */
 struct VCRSystemData_s
 {
-    RearLoadCellsFiltered_s rear_loadcells_filtered;
-    RearSusPotsFiltered_s rear_suspots_filtered;
-    SafetySystemData_s safety_system_data;
-    PedalsSystemData_s pedals_system_data;
-    FrontLoadCellsFiltered_s front_loadcells_filtered;
-    FrontSusPotsFiltered_s front_suspots_filtered;
-    SteeringFiltered_s steering_filtered;
-    DashInputState_s dash_input_state;
+    RearLoadCellsFiltered_s rear_loadcells_filtered = {};
+    RearSusPotsFiltered_s rear_suspots_filtered = {};
+    SafetySystemData_s safety_system_data = {};
+    PedalsSystemData_s pedals_system_data = {};
+    FrontLoadCellsFiltered_s front_loadcells_filtered = {};
+    FrontSusPotsFiltered_s front_suspots_filtered = {};
+    SteeringFiltered_s steering_filtered = {};
+    DashInputState_s dash_input_state = {};
+    DrivetrainDynamicReport_s drivetrain_data = {};
     bool buzzer_is_active : 1;
 };
+
+
 
 #endif // __SHAREDFIRMWARETYPES_H__
