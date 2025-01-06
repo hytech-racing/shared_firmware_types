@@ -52,13 +52,13 @@ template <typename T>
 struct veh_vec
 {
 public:
-    T FL;
-    T FR;
-    T RL;
-    T RR;
+    T FL = {};
+    T FR = {};
+    T RL = {};
+    T RR = {};
 
 public:
-    veh_vec() = default;
+    veh_vec() = delete;
     veh_vec(T _FL, T _FR, T _RL, T _RR)
     {
         FL = _FL;
