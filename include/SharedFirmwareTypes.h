@@ -58,7 +58,7 @@ public:
     T RR = {};
 
 public:
-    veh_vec() = delete;
+    veh_vec() {};
     veh_vec(T _FL, T _FR, T _RL, T _RR)
     {
         FL = _FL;
@@ -430,13 +430,13 @@ struct VCFSystemData_s
  */
 struct VCRInterfaceData_s
 {
-    RearLoadCellsUnfiltered_s rear_loadcells_unfiltered;
-    RearSusPotsUnfiltered_s rear_suspots_unfiltered;
-    VectorNavData_s vectornav_data;
-    CurrentSensorData_s current_sensor_data;
-    ShutdownSensingData_s shutdown_sensing_data;
-    EthernetLinkData_s ethernet_is_linked;
-    veh_vec<InverterData_s> inverter_data;
+    RearLoadCellsUnfiltered_s rear_loadcells_unfiltered = {};
+    RearSusPotsUnfiltered_s rear_suspots_unfiltered = {};
+    VectorNavData_s vectornav_data = {};
+    CurrentSensorData_s current_sensor_data = {};
+    ShutdownSensingData_s shutdown_sensing_data = {};
+    EthernetLinkData_s ethernet_is_linked = {};
+    veh_vec<InverterData_s> inverter_data = {};
 };
 
 /**
