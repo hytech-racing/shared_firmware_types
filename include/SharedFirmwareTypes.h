@@ -75,6 +75,11 @@ public:
         arr_out[2] = RL;
         arr_out[3] = RR;
     }
+
+    std::array<T, 4> as_array()
+    {
+        return {FL, FR, RL, RR};
+    }
 };
 
 template <typename T>
