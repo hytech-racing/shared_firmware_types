@@ -98,33 +98,33 @@ struct xy_vec
     T y;
 };
 
-struct PedalsUnfiltered_s
+struct PedalSensorData_s
 {
-    float accel1_unfiltered_percent;
-    float accel2_unfiltered_percent;
-    float brake1_unfiltered_percent;
-    float brake2_unfiltered_percent;
+    uint32_t accel_1;
+    uint32_t accel_2;
+    uint32_t brake_1;
+    uint32_t brake_2;
 };
 
-struct FrontLoadCellsUnfiltered_s
+struct FrontLoadCellData_s
 {
-    float FL_loadcell_unfiltered_pounds;
-    float FR_loadcell_unfiltered_pounds;
+    float FL_loadcell_pounds;
+    float FR_loadcell_pounds;
 };
 
 /**
  * Since suspension potentiometers are only used for validation, it's OK to keep them in units of "analog".
  */
-struct FrontSusPotsUnfiltered_s
+struct FrontSusPotData_s
 {
-    float FL_sus_pot_unfiltered_analog;
-    float FR_sus_pot_unfiltered_analog;
+    float FL_sus_pot_analog;
+    float FR_sus_pot_analog;
 };
 
-struct SteeringUnfiltered_s
+struct SteeringSensorData_s
 {
-    float analog_steering_unfiltered_degrees;
-    float digital_steering_unfiltered_degrees;
+    float analog_steering_degrees;
+    float digital_steering_degrees;
 };
 
 /**
@@ -172,51 +172,19 @@ struct PedalsSystemData_s
                          // travel is at 40%, regen_percent would be 0.667. Beyond that, regen_percent is clamped to 1.0.
 };
 
-struct FrontLoadCellsFiltered_s
+struct RearLoadCellData_s
 {
-    float FL_loadcell_filtered_pounds;
-    float FR_loadcell_filtered_pounds;
-    bool front_loadcell_FIR_is_saturated : 1;
+    float RL_loadcell_pounds;
+    float RR_loadcell_pounds;
 };
 
 /**
  * Since suspension potentiometers are only used for validation, it's OK to keep them in units of "analog".
  */
-struct FrontSusPotsFiltered_s
+struct RearSusPotData_s
 {
-    float FL_sus_pot_filtered_analog;
-    float FR_sus_pot_filtered_analog;
-    bool front_loadcell_FIR_is_saturated : 1;
-};
-
-struct SteeringFiltered_s
-{
-    float steering_filtered_degrees;
-    bool steering_FIR_is_saturated : 1;
-};
-
-/**
- * Struct for sending additional data to the Dash regarding what information to display. This may or may not be
- * necessary because the Dash will already probably be receiving a lot of redundant information.
- */
-struct DashDisplayState_s
-{
-    int dash_data = -1;
-};
-
-struct RearLoadCellsUnfiltered_s
-{
-    float RL_loadcell_unfiltered_pounds;
-    float RR_loadcell_unfiltered_pounds;
-};
-
-/**
- * Since suspension potentiometers are only used for validation, it's OK to keep them in units of "analog".
- */
-struct RearSusPotsUnfiltered_s
-{
-    float RL_sus_pot_unfiltered_analog;
-    float RR_sus_pot_unfiltered_analog;
+    float RL_sus_pot_analog;
+    float RR_sus_pot_analog;
 };
 
 /**
@@ -324,28 +292,6 @@ struct EnergyMeterData_s
     float em_voltage; // Voltage, in volts, from the EM.
 };
 
-struct RearLoadCellsFiltered_s
-{
-    float RL_loadcell_filtered_pounds;
-    float RR_loadcell_filtered_pounds;
-    bool rear_loadcell_FIR_is_saturated : 1;
-};
-
-/**
- * Since suspension potentiometers are only used for validation, it's OK to keep them in units of "analog".
- */
-struct RearSusPotsFiltered_s
-{
-    float RL_sus_pot_filtered_analog;
-    float RR_sus_pot_filtered_analog;
-    bool rear_loadcell_FIR_is_saturated : 1;
-};
-
-struct SafetySystemData_s
-{
-    bool software_is_ok : 1;
-};
-
 /// @brief Defines modes of torque limit to be processed in torque limit map for exact values.
 enum class TorqueLimit_e
 {
@@ -409,10 +355,10 @@ struct DrivetrainDynamicReport_s
  */
 struct VCFInterfaceData_s
 {
-    PedalsUnfiltered_s pedals_unfiltered;
-    FrontLoadCellsUnfiltered_s front_loadcells_unfiltered;
-    FrontSusPotsUnfiltered_s front_suspots_unfiltered;
-    SteeringUnfiltered_s steering_unfiltered;
+    PedalSensorData_s pedals_unfiltered;
+    FrontLoadCellData_s front_loadcells_unfiltered;
+    FrontSusPotData_s front_suspots_unfiltered;
+    SteeringSensorData_s steering_unfiltered;
     DashInputState_s dash_input_state; // Direct button signals from the dashboard IOExpander
 };
 
@@ -424,10 +370,6 @@ struct VCFInterfaceData_s
 struct VCFSystemData_s
 {
     PedalsSystemData_s pedals_system_data;
-    FrontLoadCellsFiltered_s front_loadcells_filtered;
-    FrontSusPotsFiltered_s front_suspots_filtered;
-    SteeringFiltered_s steering_filtered;
-    DashDisplayState_s dash_display;
 };
 
 /**
@@ -436,10 +378,8 @@ struct VCFSystemData_s
  */
 struct VCRInterfaceData_s
 {
-    RearLoadCellsUnfiltered_s rear_loadcells_unfiltered = {};
-    RearSusPotsUnfiltered_s rear_suspots_unfiltered = {};
-    VectorNavData_s vectornav_data = {};
-    CurrentSensorData_s current_sensor_data = {};
+    RearLoadCellData_s rear_loadcells_unfiltered = {};
+    RearSusPotData_s rear_suspots_unfiltered = {};
     ShutdownSensingData_s shutdown_sensing_data = {};
     EthernetLinkData_s ethernet_is_linked = {};
     veh_vec<InverterData_s> inverter_data = {};
@@ -452,13 +392,7 @@ struct VCRInterfaceData_s
  */
 struct VCRSystemData_s
 {
-    RearLoadCellsFiltered_s rear_loadcells_filtered = {};
-    RearSusPotsFiltered_s rear_suspots_filtered = {};
-    SafetySystemData_s safety_system_data = {};
     PedalsSystemData_s pedals_system_data = {};
-    FrontLoadCellsFiltered_s front_loadcells_filtered = {};
-    FrontSusPotsFiltered_s front_suspots_filtered = {};
-    SteeringFiltered_s steering_filtered = {};
     DashInputState_s dash_input_state = {};
     DrivetrainDynamicReport_s drivetrain_data = {};
     bool buzzer_is_active : 1;
