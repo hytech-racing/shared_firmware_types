@@ -108,8 +108,8 @@ struct PedalSensorData_s
 
 struct FrontLoadCellData_s
 {
-    float FL_loadcell_pounds;
-    float FR_loadcell_pounds;
+    uint32_t FL_loadcell_analog;
+    uint32_t FR_loadcell_analog;
 };
 
 /**
@@ -174,8 +174,8 @@ struct PedalsSystemData_s
 
 struct RearLoadCellData_s
 {
-    float RL_loadcell_pounds;
-    float RR_loadcell_pounds;
+    float RL_loadcell_analog;
+    float RR_loadcell_analog;
 };
 
 /**
