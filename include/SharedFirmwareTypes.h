@@ -360,6 +360,7 @@ struct VCFInterfaceData_s
     FrontSusPotData_s front_suspot_data;
     SteeringSensorData_s steering_data;
     DashInputState_s dash_input_state; // Direct button signals from the dashboard IOExpander
+    CurrentSensorData_s current_sensor_data;
 };
 
 /**
