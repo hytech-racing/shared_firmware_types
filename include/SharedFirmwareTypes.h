@@ -117,8 +117,8 @@ struct FrontLoadCellData_s
  */
 struct FrontSusPotData_s
 {
-    float FL_sus_pot_analog;
-    float FR_sus_pot_analog;
+    uint32_t FL_sus_pot_analog;
+    uint32_t FR_sus_pot_analog;
 };
 
 struct SteeringSensorData_s
@@ -174,8 +174,8 @@ struct PedalsSystemData_s
 
 struct RearLoadCellData_s
 {
-    float RL_loadcell_analog;
-    float RR_loadcell_analog;
+    uint32_t RL_loadcell_analog;
+    uint32_t RR_loadcell_analog;
 };
 
 /**
@@ -183,8 +183,8 @@ struct RearLoadCellData_s
  */
 struct RearSusPotData_s
 {
-    float RL_sus_pot_analog;
-    float RR_sus_pot_analog;
+    uint32_t RL_sus_pot_analog;
+    uint32_t RR_sus_pot_analog;
 };
 
 /**
