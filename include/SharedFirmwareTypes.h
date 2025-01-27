@@ -355,10 +355,10 @@ struct DrivetrainDynamicReport_s
  */
 struct VCFInterfaceData_s
 {
-    PedalSensorData_s pedals_unfiltered;
-    FrontLoadCellData_s front_loadcells_unfiltered;
-    FrontSusPotData_s front_suspots_unfiltered;
-    SteeringSensorData_s steering_unfiltered;
+    PedalSensorData_s pedals_data;
+    FrontLoadCellData_s front_loadcell_data;
+    FrontSusPotData_s front_suspot_data;
+    SteeringSensorData_s steering_data;
     DashInputState_s dash_input_state; // Direct button signals from the dashboard IOExpander
 };
 
@@ -378,8 +378,8 @@ struct VCFSystemData_s
  */
 struct VCRInterfaceData_s
 {
-    RearLoadCellData_s rear_loadcells_unfiltered = {};
-    RearSusPotData_s rear_suspots_unfiltered = {};
+    RearLoadCellData_s rear_loadcell_data = {};
+    RearSusPotData_s rear_suspot_data = {};
     ShutdownSensingData_s shutdown_sensing_data = {};
     EthernetLinkData_s ethernet_is_linked = {};
     veh_vec<InverterData_s> inverter_data = {};
