@@ -279,7 +279,7 @@ struct InverterData_s
 struct BMSData_s
 {
     float voltages[126];
-    float temperatures[126];
+    float temperatures[12];
 };
 
 /**
