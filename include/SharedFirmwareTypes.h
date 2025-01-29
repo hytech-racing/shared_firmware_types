@@ -361,6 +361,7 @@ struct VCFInterfaceData_s
     SteeringSensorData_s steering_data;
     DashInputState_s dash_input_state; // Direct button signals from the dashboard IOExpander
     CurrentSensorData_s current_sensor_data;
+    EthernetLinkData_s ethernet_is_linked;
 };
 
 /**
