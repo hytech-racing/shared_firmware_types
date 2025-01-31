@@ -240,7 +240,7 @@ struct ShutdownSensingData_s
 /**
  * The 'link' lights from the ethernet switch to indicate whether or not each item is connected.
  */
-struct EthernetLinkData_s
+struct VCREthernetLinkData_s
 {
     bool acu_link : 1;
     bool drivebrain_link : 1;
@@ -248,6 +248,19 @@ struct EthernetLinkData_s
     bool teensy_link : 1;
     bool debug_link : 1;
     bool ubiquiti_link : 1;
+};
+
+/**
+ * The 'link' data from the VCF ethernet switch to indicate whether or not each item is connected.
+ */
+struct VCFEthernetLinkData_s
+{
+    bool poe_1_link : 1;
+    bool poe_2_link : 1;
+    bool mag_3_link : 1;
+    bool vcr_link : 1;
+    bool teensy_link : 1;
+    bool dash_link : 1;
 };
 
 /**
@@ -361,7 +374,7 @@ struct VCFInterfaceData_s
     SteeringSensorData_s steering_data;
     DashInputState_s dash_input_state; // Direct button signals from the dashboard IOExpander
     CurrentSensorData_s current_sensor_data;
-    EthernetLinkData_s ethernet_link_data;
+    VCFEthernetLinkData_s vcf_ethernet_link_data;
 };
 
 /**
@@ -383,7 +396,7 @@ struct VCRInterfaceData_s
     RearLoadCellData_s rear_loadcell_data = {};
     RearSusPotData_s rear_suspot_data = {};
     ShutdownSensingData_s shutdown_sensing_data = {};
-    EthernetLinkData_s ethernet_is_linked = {};
+    VCREthernetLinkData_s ethernet_is_linked = {};
     veh_vec<InverterData_s> inverter_data = {};
 };
 
