@@ -292,8 +292,7 @@ struct InverterData_s
 struct BMSData_s
 {
     float voltages[126];
-    float temperatures[126];
-    long last_acu_message_timestamp; // Used for detecting "heartbeat"    
+    float temperatures[12];
 };
 
 /**
@@ -362,6 +361,18 @@ struct DrivetrainDynamicReport_s
     float measuredMagnetizingCurrents[4];
 };
 
+struct AMSSystemData_s
+{
+    float min_cell_voltage;
+    float average_cell_voltage;
+    float max_cell_voltage;
+    float min_temp; // Degrees celsius
+    float average_temp; // Degrees celsius
+    float max_temp; // Degrees celsius
+
+    bool ams_ok; // False when one of the three shutdown conditions is met (see AMSSystem header)
+};
+
 /**
  * Struct containing ALL of the data from the VCF Interfaces. An instance of this struct will be
  * passed into each of VCF's systems as an input.
@@ -398,6 +409,7 @@ struct VCRInterfaceData_s
     ShutdownSensingData_s shutdown_sensing_data = {};
     VCREthernetLinkData_s ethernet_is_linked = {};
     veh_vec<InverterData_s> inverter_data = {};
+    CurrentSensorData_s current_sensor_data;
 };
 
 /**
@@ -410,6 +422,7 @@ struct VCRSystemData_s
     PedalsSystemData_s pedals_system_data = {};
     DashInputState_s dash_input_state = {};
     DrivetrainDynamicReport_s drivetrain_data = {};
+    AMSSystemData_s ams_data = {};
     bool buzzer_is_active : 1;
 };
 
