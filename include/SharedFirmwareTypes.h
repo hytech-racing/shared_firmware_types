@@ -116,7 +116,10 @@ struct xy_vec
 };
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 /*
 struct PedalSensorData_s
 {
