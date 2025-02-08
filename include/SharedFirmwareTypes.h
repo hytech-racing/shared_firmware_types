@@ -115,11 +115,7 @@ struct xy_vec
     T y;
 };
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> Stashed changes
+
 /*
 struct PedalSensorData_s
 {
@@ -130,7 +126,6 @@ struct PedalSensorData_s
 };
 */
 
->>>>>>> Stashed changes
 struct FrontLoadCellData_s
 {
     uint32_t FL_loadcell_analog;
