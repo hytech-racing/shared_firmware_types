@@ -1,6 +1,8 @@
 #ifndef __SHAREDFIRMWARETYPES_H__
 #define __SHAREDFIRMWARETYPES_H__
 #include <stdint.h>
+#include <tuple>
+#include <utility>
 #include <array>
 
 
@@ -42,7 +44,22 @@ struct AnalogConversionPacket_s
 
 
 
+template<typename... components>
+struct ComponentContainer
+{
+    explicit ComponentContainer(components&... comps) : components_tuple(comps...) {}
 
+    ComponentContainer() = delete;
+
+    // Get by type
+    template <typename T>
+    T& get() {
+        return std::get<T>(components_tuple);
+    }
+
+private:
+    std::tuple<components&...> components_tuple;
+};
 
 /**
  * Generic data vector type that can be used for tires, load cells, or anything that has to do with
@@ -96,14 +113,6 @@ struct xy_vec
 {
     T x;
     T y;
-};
-
-struct PedalSensorData_s
-{
-    uint32_t accel_1;
-    uint32_t accel_2;
-    uint32_t brake_1;
-    uint32_t brake_2;
 };
 
 struct FrontLoadCellData_s
