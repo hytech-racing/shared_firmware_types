@@ -115,6 +115,19 @@ struct xy_vec
     T y;
 };
 
+<<<<<<< Updated upstream
+=======
+/*
+struct PedalSensorData_s
+{
+    uint32_t accel_1;
+    uint32_t accel_2;
+    uint32_t brake_1;
+    uint32_t brake_2;
+};
+*/
+
+>>>>>>> Stashed changes
 struct FrontLoadCellData_s
 {
     uint32_t FL_loadcell_analog;
@@ -388,7 +401,6 @@ struct AMSSystemData_s
  */
 struct VCFInterfaceData_s
 {
-    PedalSensorData_s pedals_data;
     FrontLoadCellData_s front_loadcell_data;
     FrontSusPotData_s front_suspot_data;
     SteeringSensorData_s steering_data;
