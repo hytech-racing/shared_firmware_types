@@ -374,8 +374,8 @@ struct TorqueControllerOutput_s
 struct DrivetrainDynamicReport_s
 {
     uint16_t measuredInverterFLPackVoltage;
-    veh_vec<speed_rpm> measuredSpeeds; // rpm
-    veh_vec<torque_nm> measuredTorques;
+    speed_rpm measuredSpeeds[4]; // rpm
+    torque_nm measuredTorques[4];
     veh_vec<float> measuredTorqueCurrents;
     veh_vec<float> measuredMagnetizingCurrents;
 };
@@ -452,6 +452,8 @@ struct VCRData_s
     PedalsSystemData_s pedals_system_data = {};
     DashInputState_s dash_input_state = {};
     DrivetrainDynamicReport_s drivetrain_data = {};
+    ACUCoreData_s acu_core_data = {};
+    ACUAllData_s acu_all_data = {};
     AMSSystemData_s ams_data = {};
     bool buzzer_is_active : 1;
 };
