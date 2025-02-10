@@ -452,6 +452,8 @@ struct VCRData_s
     PedalsSystemData_s pedals_system_data = {};
     DashInputState_s dash_input_state = {};
     DrivetrainDynamicReport_s drivetrain_data = {};
+    ACUCoreData_s acu_core_data = {};
+    ACUAllData_s acu_all_data = {};
     AMSSystemData_s ams_data = {};
     bool buzzer_is_active : 1;
 };
