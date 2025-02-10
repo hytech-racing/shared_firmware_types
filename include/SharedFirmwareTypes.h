@@ -374,10 +374,10 @@ struct TorqueControllerOutput_s
 struct DrivetrainDynamicReport_s
 {
     uint16_t measuredInverterFLPackVoltage;
-    speed_rpm measuredSpeeds[4]; // rpm
-    torque_nm measuredTorques[4];
-    float measuredTorqueCurrents[4];
-    float measuredMagnetizingCurrents[4];
+    veh_vec<speed_rpm> measuredSpeeds; // rpm
+    veh_vec<torque_nm> measuredTorques;
+    veh_vec<float> measuredTorqueCurrents;
+    veh_vec<float> measuredMagnetizingCurrents;
 };
 
 /**
