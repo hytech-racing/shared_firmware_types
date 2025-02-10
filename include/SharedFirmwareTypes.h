@@ -98,6 +98,9 @@ struct xy_vec
     T y;
 };
 
+/**
+ * Nested struct of analog pedals data (stored as int from 0-4095).
+ */
 struct PedalSensorData_s
 {
     uint32_t accel_1;
@@ -121,10 +124,15 @@ struct FrontSusPotData_s
     uint32_t FR_sus_pot_analog;
 };
 
+/**
+ * Non digitally-filtered steering data.
+ */
 struct SteeringSensorData_s
 {
+    // Analog steering sensor data, in degrees.
     float analog_steering_degrees;
-    float digital_steering_degrees;
+    // Digital steering sensor data, unconverted (0-4095)
+    float digital_steering_analog;
 };
 
 /**
@@ -289,12 +297,6 @@ struct InverterData_s
     int feedback_torque;
 };
 
-struct BMSData_s
-{
-    float voltages[126];
-    float temperatures[12];
-};
-
 /**
  * Forwarded directly from CAN with no additional transformations.
  */
@@ -361,23 +363,52 @@ struct DrivetrainDynamicReport_s
     float measuredMagnetizingCurrents[4];
 };
 
+/**
+ * Output data for the AMSSystem. This struct is different from ACUCoreData an
+ * ACUAllData because those contain information that is processed and sent by the
+ * ACU, while AMSSystemData is the report that comes from the AMSSystem in VCR code.
+ * All values are calculated FROM ACUAllData.
+ */
 struct AMSSystemData_s
 {
     float min_cell_voltage;
     float average_cell_voltage;
     float max_cell_voltage;
-    float min_temp; // Degrees celsius
-    float average_temp; // Degrees celsius
-    float max_temp; // Degrees celsius
+    float min_temp_celsius; // Degrees celsius
+    float average_temp_celsius; // Degrees celsius
+    float max_temp_celsius; // Degrees celsius
+    float total_pack_voltage;
 
     bool ams_ok; // False when one of the three shutdown conditions is met (see AMSSystem header)
 };
 
 /**
- * Struct containing ALL of the data from the VCF Interfaces. An instance of this struct will be
- * passed into each of VCF's systems as an input.
+ * Minimum data that the ACU must send for the car to run. Detailed temps/voltages are not minimum-viable. The
+ * ACUAllData message contains an instance of the data in this ACUCoreData struct.
  */
-struct VCFInterfaceData_s
+struct ACUCoreData_s
+{
+    float pack_voltage;
+    float min_cell_voltage; // IIR filtered min cell voltage
+    float avg_cell_voltage;
+    float max_cell_temp; //IIR filtered max cell temp
+};
+
+/**
+ * ACUAllData contains the detailed, unprocessed data from ACU sensors.
+ */
+struct ACUAllData_s
+{
+    float voltages[126];
+    float cell_temperatures[48];
+    float board_humidities[6];
+};
+
+/**
+ * All system AND interface data in VCF. VCF systems will place data in some of the nested structs, while
+ * systems will place data in some of the other structs.
+ */
+struct VCFData_s
 {
     PedalSensorData_s pedals_data;
     FrontLoadCellData_s front_loadcell_data;
@@ -386,15 +417,6 @@ struct VCFInterfaceData_s
     DashInputState_s dash_input_state; // Direct button signals from the dashboard IOExpander
     CurrentSensorData_s current_sensor_data;
     VCFEthernetLinkData_s vcf_ethernet_link_data;
-};
-
-/**
- * Struct containing ALL of the VCF systems' data. An instance of this struct, along with an instance
- * of the interface data struct, will be passed into the VCF interfaces so they can send the data
- * out towards other microcontrollers.
- */
-struct VCFSystemData_s
-{
     PedalsSystemData_s pedals_system_data;
 };
 
@@ -402,7 +424,7 @@ struct VCFSystemData_s
  * Struct containing ALL of the VCR interfaces' data. An instance of this struct  will be passed into the VCR
  * systems before calling their tick() methods.
  */
-struct VCRInterfaceData_s
+struct VCRData_s
 {
     RearLoadCellData_s rear_loadcell_data = {};
     RearSusPotData_s rear_suspot_data = {};
@@ -410,15 +432,6 @@ struct VCRInterfaceData_s
     VCREthernetLinkData_s ethernet_is_linked = {};
     veh_vec<InverterData_s> inverter_data = {};
     CurrentSensorData_s current_sensor_data;
-};
-
-/**
- * Struct containing ALL of the VCR systems' data. An instance of this struct, along with an instance
- * of the interface data struct, will be passed into the VCR interfaces so they can send the data
- * out towards other microcontrollers.
- */
-struct VCRSystemData_s
-{
     PedalsSystemData_s pedals_system_data = {};
     DashInputState_s dash_input_state = {};
     DrivetrainDynamicReport_s drivetrain_data = {};
