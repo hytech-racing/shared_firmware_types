@@ -100,6 +100,12 @@ public:
     
 };
 
+struct TimestampedData_s
+{
+    unsigned long last_recv_millis;
+};
+
+
 template <typename T>
 struct xyz_vec
 {
@@ -431,23 +437,39 @@ struct VCFData_s
  * Struct containing ALL of the VCR interfaces' data. An instance of this struct  will be passed into the VCR
  * systems before calling their tick() methods.
  */
-struct VCRData_s
+
+
+
+struct VCRSystemData_s
 {
+    AMSSystemData_s ams_data = {};
+};
+
+struct StampedPedalsSystemData_s : TimestampedData_s
+{
+    PedalsSystemData_s pedals_data;
+};
+
+struct VCRInterfaceData_s
+{
+    VCREthernetLinkData_s ethernet_is_linked = {};
+    ShutdownSensingData_s shutdown_sensing_data = {};
     RearLoadCellData_s rear_loadcell_data = {};
     RearSusPotData_s rear_suspot_data = {};
-    ShutdownSensingData_s shutdown_sensing_data = {};
-    VCREthernetLinkData_s ethernet_is_linked = {};
+    CurrentSensorData_s current_sensor_data = {};
+    StampedPedalsSystemData_s recvd_pedals_data = {};
     veh_vec<InverterData_s> inverter_data = {};
-    CurrentSensorData_s current_sensor_data;
-    PedalsSystemData_s pedals_system_data = {};
     DashInputState_s dash_input_state = {};
     DrivetrainDynamicReport_s drivetrain_data = {};
     ACUCoreData_s acu_core_data = {};
     ACUAllData_s acu_all_data = {};
-    AMSSystemData_s ams_data = {};
-    bool buzzer_is_active : 1;
 };
 
-
+struct VCRData_s
+{
+    VCRSystemData_s system_data;
+    VCRInterfaceData_s interface_data;
+    // bool buzzer_is_active : 1; // erm, what was this for?
+};
 
 #endif // __SHAREDFIRMWARETYPES_H__
