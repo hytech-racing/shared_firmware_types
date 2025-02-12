@@ -418,10 +418,26 @@ struct ACUAllData_s
 };
 
 /**
- * All system AND interface data in VCF. VCF systems will place data in some of the nested structs, while
- * systems will place data in some of the other structs.
+ * Timestamped pedals data. Extends TimestampedData_s to include a received timestamp, in milliseconds.
  */
-struct VCFData_s
+struct StampedPedalsSystemData_s : TimestampedData_s
+{
+    PedalsSystemData_s pedals_data;
+};
+
+/**
+ * Struct containing the VCR systems' data. These are generally the outputs of VCR systems.
+ */
+struct VCFSystemData_s
+{
+    PedalsSystemData_s pedals_system_data;
+};
+
+/**
+ * Struct containing the VCF interfaces' data. An instance of this will be passed into the
+ * evaluation of the VCF systems.
+ */
+struct VCFInterfaceData_s
 {
     PedalSensorData_s pedal_sensor_data;
     FrontLoadCellData_s front_loadcell_data;
@@ -430,28 +446,33 @@ struct VCFData_s
     DashInputState_s dash_input_state; // Direct button signals from the dashboard IOExpander
     CurrentSensorData_s current_sensor_data;
     VCFEthernetLinkData_s vcf_ethernet_link_data;
-    PedalsSystemData_s pedals_system_data;
 };
 
 /**
- * Struct containing ALL of the VCR interfaces' data. An instance of this struct  will be passed into the VCR
- * systems before calling their tick() methods.
+ * All system AND interface data in VCF. VCF systems will place data in some of the nested structs, while
+ * systems will place data in some of the other structs.
  */
+struct VCFData_s
+{
+    VCFSystemData_s system_data;
+    VCFInterfaceData_s interface_data;
+};
 
-
-
+/**
+ * Struct containing the VCR systems' data. These are generally the outputs of VCR systems.
+ */
 struct VCRSystemData_s
 {
     AMSSystemData_s ams_data = {};
-    bool buzzer_is_active = false ;
+    DrivetrainDynamicReport_s drivetrain_data = {};
+    bool buzzer_is_active = false;
 
 };
 
-struct StampedPedalsSystemData_s : TimestampedData_s
-{
-    PedalsSystemData_s pedals_data;
-};
-
+/**
+ * Struct containing the VCR interfaces' data. An instance of this will be passed into the
+ * evaluation of the VCR systems.
+ */
 struct VCRInterfaceData_s
 {
     VCREthernetLinkData_s ethernet_is_linked = {};
@@ -462,7 +483,6 @@ struct VCRInterfaceData_s
     StampedPedalsSystemData_s recvd_pedals_data = {};
     veh_vec<InverterData_s> inverter_data = {};
     DashInputState_s dash_input_state = {};
-    DrivetrainDynamicReport_s drivetrain_data = {};
     ACUCoreData_s acu_core_data = {};
     ACUAllData_s acu_all_data = {};
 };
