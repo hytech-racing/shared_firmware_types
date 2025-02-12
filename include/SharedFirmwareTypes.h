@@ -463,6 +463,7 @@ struct VCRInterfaceData_s
     DrivetrainDynamicReport_s drivetrain_data = {};
     ACUCoreData_s acu_core_data = {};
     ACUAllData_s acu_all_data = {};
+    bool buzzer_is_active = false;
 };
 
 struct VCRData_s
