@@ -355,17 +355,27 @@ struct TorqueControllerMuxStatus_s
 /// @brief Stores setpoints for a command to the Drivetrain, containing speed and torque setpoints for each motor. These setpoints are defined in the torque controllers cycled by the TC Muxer. 
 /// The Speeds unit is rpm and are the targeted speeds for each wheel of the car.
 /// The torques unit is nm and is the max torque requested from the inverter to reach such speeds.
+/// One can use the arrays with FR(Front Left), FL(Front Left), RL(Rear Left), RR(Rear Right)  to access or modify the respective set points. eg. speeds_rpm[FR] = 0.0;
+/// Their indexes are defined in utility.h as follows: FL = 0, FR = 1, RL = 2, RR = 3.
 struct DrivetrainCommand_s
 {
-    veh_vec<speed_rpm> desired_speeds;
-    veh_vec<torque_nm> torque_limits;
+    float speeds_rpm[4];
+    float inverter_torque_limit[4]; 
+};
+
+/// @brief Packages drivetrain command with ready boolean to give feedback on controller successfully evaluating
+/// @note returned by all car controllers evaluate method 
+struct TorqueControllerOutput_s
+{
+    DrivetrainCommand_s command;
+    bool ready;
 };
 
 struct DrivetrainDynamicReport_s
 {
     uint16_t measuredInverterFLPackVoltage;
-    veh_vec<speed_rpm> measuredSpeeds;
-    veh_vec<torque_nm> measuredTorques;
+    speed_rpm measuredSpeeds[4]; // rpm
+    torque_nm measuredTorques[4];
     veh_vec<float> measuredTorqueCurrents;
     veh_vec<float> measuredMagnetizingCurrents;
 };
@@ -412,10 +422,9 @@ struct ACUAllData_s
 };
 
 /**
- * All system AND interface data in VCF. VCF systems will place data in some of the nested structs, while
- * systems will place data in some of the other structs.
+ * All interface data in VCF. Interfaces are hardware-specific and should contain no business logic.
  */
-struct VCFData_s
+struct VCFInterfaceData_s
 {
     PedalSensorData_s pedal_sensor_data;
     FrontLoadCellData_s front_loadcell_data;
@@ -424,7 +433,51 @@ struct VCFData_s
     DashInputState_s dash_input_state; // Direct button signals from the dashboard IOExpander
     CurrentSensorData_s current_sensor_data;
     VCFEthernetLinkData_s vcf_ethernet_link_data;
+};
+
+/**
+ * All system data in VCF. Systems are hardware-agnostic and should contain all logic/calculations.
+ */
+struct VCFSystemData_s
+{
     PedalsSystemData_s pedals_system_data;
+};
+
+/**
+ * All system AND interface data in VCF. VCF systems will place data in some of the nested structs, while
+ * systems will place data in some of the other structs.
+ */
+struct VCFData_s
+{
+    VCFInterfaceData_s interface_data;
+    VCFSystemData_s system_data;
+};
+
+/**
+ * All interface data in VCR. Interfaces are hardware-specific and should contain no business logic.
+ */
+struct VCRInterfaceData_s
+{
+    RearLoadCellData_s rear_loadcell_data = {};
+    RearSusPotData_s rear_suspot_data = {};
+    ShutdownSensingData_s shutdown_sensing_data = {};
+    VCREthernetLinkData_s ethernet_is_linked = {};
+    veh_vec<InverterData_s> inverter_data = {};
+    CurrentSensorData_s current_sensor_data;
+    ACUCoreData_s acu_core_data = {};
+    ACUAllData_s acu_all_data = {};
+    DashInputState_s dash_input_state = {};
+};
+
+/**
+ * All system data in VCR. Systems are hardware-agnostic and should contain all logic/calculations.
+ */
+struct VCRSystemData_s
+{
+    PedalsSystemData_s pedals_system_data = {};
+    DrivetrainDynamicReport_s drivetrain_data = {};
+    AMSSystemData_s ams_data = {};
+    bool buzzer_is_active : 1;
 };
 
 /**
@@ -433,19 +486,8 @@ struct VCFData_s
  */
 struct VCRData_s
 {
-    RearLoadCellData_s rear_loadcell_data = {};
-    RearSusPotData_s rear_suspot_data = {};
-    ShutdownSensingData_s shutdown_sensing_data = {};
-    VCREthernetLinkData_s ethernet_is_linked = {};
-    veh_vec<InverterData_s> inverter_data = {};
-    CurrentSensorData_s current_sensor_data;
-    PedalsSystemData_s pedals_system_data = {};
-    DashInputState_s dash_input_state = {};
-    DrivetrainDynamicReport_s drivetrain_data = {};
-    ACUCoreData_s acu_core_data = {};
-    ACUAllData_s acu_all_data = {};
-    AMSSystemData_s ams_data = {};
-    bool buzzer_is_active : 1;
+    VCRInterfaceData_s interface_data;
+    VCRSystemData_s system_data;
 };
 
 
