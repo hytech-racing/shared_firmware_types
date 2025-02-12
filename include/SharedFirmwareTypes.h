@@ -443,6 +443,8 @@ struct VCFData_s
 struct VCRSystemData_s
 {
     AMSSystemData_s ams_data = {};
+    bool buzzer_is_active = false ;
+
 };
 
 struct StampedPedalsSystemData_s : TimestampedData_s
@@ -469,7 +471,6 @@ struct VCRData_s
 {
     VCRSystemData_s system_data;
     VCRInterfaceData_s interface_data;
-    bool buzzer_is_active = false ;
 };
 
 #endif // __SHAREDFIRMWARETYPES_H__
