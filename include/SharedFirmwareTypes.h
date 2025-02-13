@@ -102,7 +102,8 @@ public:
 
 struct TimestampedData_s
 {
-    unsigned long last_recv_millis;
+    unsigned long last_recv_millis = 0;
+    bool recvd = false; // flag saying that this message has been received at least once 
 };
 
 
@@ -366,6 +367,10 @@ struct DrivetrainCommand_s
     veh_vec<speed_rpm> desired_speeds;
     veh_vec<torque_nm> torque_limits;
 };
+struct StampedDrivetrainCommand_s : TimestampedData_s
+{
+    DrivetrainCommand_s cmd_data;
+};
 
 struct DrivetrainDynamicReport_s
 {
@@ -405,11 +410,6 @@ struct ACUCoreData_s
     float min_cell_voltage; // IIR filtered min cell voltage
     float avg_cell_voltage;
     float max_cell_temp; //IIR filtered max cell temp
-};
-
-struct StampedACUCoreData_s : TimestampedData_s
-{
-    ACUCoreData_s acu_data;
 };
 
 /**
@@ -470,6 +470,7 @@ struct VCRSystemData_s
 {
     AMSSystemData_s ams_data = {};
     DrivetrainDynamicReport_s drivetrain_data = {};
+    TorqueControllerMuxStatus_s tc_mux_status = {};
     bool buzzer_is_active = false;
 
 };
@@ -488,8 +489,9 @@ struct VCRInterfaceData_s
     StampedPedalsSystemData_s recvd_pedals_data = {};
     veh_vec<InverterData_s> inverter_data = {};
     DashInputState_s dash_input_state = {};
-    StampedACUCoreData_s stamped_acu_core_data = {};
+    ACUCoreData_s acu_core_data = {};
     ACUAllData_s acu_all_data = {};
+    StampedDrivetrainCommand_s latest_drivebrain_command = {};
 };
 
 struct VCRData_s
