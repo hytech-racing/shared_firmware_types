@@ -8,6 +8,7 @@
 
 using speed_rpm = float;
 using torque_nm = float;
+using volt = float;
 
 /**
  * AnalogSensorStatus_e gets packaged along with the AnalogConversion_s struct as
