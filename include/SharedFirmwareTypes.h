@@ -438,6 +438,7 @@ struct StampedPedalsSystemData_s : TimestampedData_s
 struct VCFSystemData_s
 {
     PedalsSystemData_s pedals_system_data;
+    bool buzzer_is_active = false;
 };
 
 /**
