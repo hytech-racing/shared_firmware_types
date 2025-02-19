@@ -1,7 +1,7 @@
 #ifndef __SHAREDFIRMWARETYPES_H__
 #define __SHAREDFIRMWARETYPES_H__
 #include <stdint.h>
-#include <tuple>
+
 #include <utility>
 #include <array>
 
@@ -42,25 +42,6 @@ template <int N>
 struct AnalogConversionPacket_s
 {
     AnalogConversion_s conversions[N];
-};
-
-
-
-template<typename... components>
-struct ComponentContainer
-{
-    explicit ComponentContainer(components&... comps) : components_tuple(comps...) {}
-
-    ComponentContainer() = delete;
-
-    // Get by type
-    template <typename T>
-    T& get() {
-        return std::get<T>(components_tuple);
-    }
-
-private:
-    std::tuple<components&...> components_tuple;
 };
 
 /**
@@ -104,7 +85,14 @@ public:
 
 struct TimestampedData_s
 {
-    unsigned long last_recv_millis;
+    unsigned long last_recv_millis = 0;
+    bool recvd = false; // flag saying that this message has been received at least once 
+};
+
+template <typename T>
+struct StampedVehVec : TimestampedData_s
+{
+    veh_vec<T> veh_vec_data;
 };
 
 
@@ -360,6 +348,8 @@ struct TorqueControllerMuxStatus_s
     bool output_is_bypassing_limits;
 };
 
+
+
 /// @brief Stores setpoints for a command to the Drivetrain, containing speed and torque setpoints for each motor. These setpoints are defined in the torque controllers cycled by the TC Muxer. 
 /// The Speeds unit is rpm and are the targeted speeds for each wheel of the car.
 /// The torques unit is nm and is the max torque requested from the inverter to reach such speeds.
@@ -367,6 +357,19 @@ struct DrivetrainCommand_s
 {
     veh_vec<speed_rpm> desired_speeds;
     veh_vec<torque_nm> torque_limits;
+};
+
+
+struct StampedDrivetrainCommand_s
+{
+    StampedVehVec<speed_rpm> desired_speeds;
+    StampedVehVec<torque_nm> torque_limits;
+
+    DrivetrainCommand_s get_command()
+    {
+        return {.desired_speeds = desired_speeds.veh_vec_data, 
+                .torque_limits = torque_limits.veh_vec_data};
+    }
 };
 
 struct DrivetrainDynamicReport_s
@@ -407,11 +410,6 @@ struct ACUCoreData_s
     float min_cell_voltage; // IIR filtered min cell voltage
     float avg_cell_voltage;
     float max_cell_temp; //IIR filtered max cell temp
-};
-
-struct StampedACUCoreData_s : TimestampedData_s
-{
-    ACUCoreData_s acu_data;
 };
 
 /**
@@ -473,6 +471,7 @@ struct VCRSystemData_s
 {
     AMSSystemData_s ams_data = {};
     DrivetrainDynamicReport_s drivetrain_data = {};
+    TorqueControllerMuxStatus_s tc_mux_status = {};
     bool buzzer_is_active = false;
 
 };
@@ -491,8 +490,9 @@ struct VCRInterfaceData_s
     StampedPedalsSystemData_s recvd_pedals_data = {};
     veh_vec<InverterData_s> inverter_data = {};
     DashInputState_s dash_input_state = {};
-    StampedACUCoreData_s stamped_acu_core_data = {};
+    ACUCoreData_s acu_core_data = {};
     ACUAllData_s acu_all_data = {};
+    StampedDrivetrainCommand_s latest_drivebrain_command = {};
 };
 
 struct VCRData_s
