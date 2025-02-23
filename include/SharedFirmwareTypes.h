@@ -500,10 +500,19 @@ struct VCRInterfaceData_s
     StampedDrivetrainCommand_s latest_drivebrain_command = {};
 };
 
+
+struct FWVersionInfo
+{
+    std::array<char, 9> fw_version_hash = {"deadbeef"};
+    bool project_on_main_or_master = false;
+    bool project_is_dirty = false;
+};
+
 struct VCRData_s
 {
     VCRSystemData_s system_data;
     VCRInterfaceData_s interface_data;
+    FWVersionInfo fw_version_info;
 };
 
 #endif // __SHAREDFIRMWARETYPES_H__
