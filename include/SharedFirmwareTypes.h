@@ -4,7 +4,7 @@
 
 #include <utility>
 #include <array>
-
+#include <stddef.h>
 
 using speed_rpm = float;
 using torque_nm = float;
