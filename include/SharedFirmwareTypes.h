@@ -412,6 +412,19 @@ struct ACUCoreData_s
     float max_cell_temp; //IIR filtered max cell temp
 };
 
+template<size_t num_cells>
+struct ACUData_s {
+    volt min_cell_voltage;
+    volt max_cell_voltage;
+    volt pack_voltage;
+    std::array<volt, num_cells> voltages;
+    celsius max_cell_temp; 
+    celsius max_board_temp;
+
+    bool charging_enabled;
+    bool acu_ok; // False when one of the three shutdown conditions is met (see AMSSystem header)
+};
+
 struct StampedACUCoreData_s : TimestampedData_s
 {
     ACUCoreData_s acu_data;
