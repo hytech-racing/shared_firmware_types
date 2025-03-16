@@ -483,6 +483,15 @@ struct VCFData_s
 };
 
 /**
+ * Determines whether VCR has receied a message from VCF recently.
+ */
+struct VCFHeartbeatData_s
+{
+    bool heartbeat_ok = false;
+    unsigned long last_heartbeat_time = 0;
+};
+
+/**
  * Struct containing the VCR systems' data. These are generally the outputs of VCR systems.
  */
 struct VCRSystemData_s
@@ -490,6 +499,7 @@ struct VCRSystemData_s
     AMSSystemData_s ams_data = {};
     DrivetrainDynamicReport_s drivetrain_data = {};
     TorqueControllerMuxStatus_s tc_mux_status = {};
+    VCFHeartbeatData_s = {};
     bool buzzer_is_active = false;
 
 };
