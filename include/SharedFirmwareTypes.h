@@ -447,7 +447,6 @@ struct StampedPedalsSystemData_s : TimestampedData_s
 {
     PedalsSystemData_s pedals_data;
     bool heartbeat_ok = false;
-    unsigned long last_heartbeat_time = 0;
 };
 
 /**
