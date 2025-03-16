@@ -499,7 +499,7 @@ struct VCRSystemData_s
     AMSSystemData_s ams_data = {};
     DrivetrainDynamicReport_s drivetrain_data = {};
     TorqueControllerMuxStatus_s tc_mux_status = {};
-    VCFHeartbeatData_s = {};
+    VCFHeartbeatData_s vcf_heartbeat_data = {};
     bool buzzer_is_active = false;
 
 };
