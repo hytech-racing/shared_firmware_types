@@ -382,7 +382,7 @@ struct DrivetrainDynamicReport_s
 };
 
 /**
- * Output data for the AMSSystem. This struct is different from ACUCoreData an
+ * Output data for the AMSSystem. This struct is different from ACUCoreData and
  * ACUAllData because those contain information that is processed and sent by the
  * ACU, while AMSSystemData is the report that comes from the AMSSystem in VCR code.
  * All values are calculated FROM ACUAllData.
@@ -412,7 +412,14 @@ struct ACUCoreData_s
     float max_cell_temp; //IIR filtered max cell temp
 };
 
-template<size_t num_cells>
+template<size_t num_chips>
+struct ACUFaultData_s
+{
+    size_t global_fault_count;
+    std::array<size_t, num_chips> consecutive_fault_count_per_chip;
+};
+
+template<size_t num_cells, size_t num_chips>
 struct ACUData_s {
     volt min_cell_voltage;
     volt max_cell_voltage;
@@ -424,6 +431,8 @@ struct ACUData_s {
     std::array<bool, num_cells> cb;
     std::array<celsius, 48> cell_temps;
 
+    ACUFaultData_s<num_chips> fault_data;
+    
     bool charging_enabled;
     bool acu_ok; // False when one of the three shutdown conditions is met (see AMSSystem header)
 };
@@ -438,6 +447,7 @@ struct StampedACUCoreData_s : TimestampedData_s
  */
 struct ACUAllData_s
 {
+    ACUCoreData_s core_data;
     float voltages[126];
     float cell_temperatures[48];
     float board_humidities[6];
