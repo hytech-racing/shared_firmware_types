@@ -419,7 +419,7 @@ struct ACUFaultData_s
     std::array<size_t, num_chips> consecutive_fault_count_per_chip;
 };
 
-template<size_t num_cells, size_t num_chips>
+template<size_t num_cells>
 struct ACUData_s {
     volt min_cell_voltage;
     volt max_cell_voltage;
@@ -431,8 +431,8 @@ struct ACUData_s {
     std::array<bool, num_cells> cb;
     std::array<celsius, 48> cell_temps;
 
-    ACUFaultData_s<num_chips> fault_data;
-    
+    size_t global_invalid_packet_count;
+
     bool charging_enabled;
     bool acu_ok; // False when one of the three shutdown conditions is met (see AMSSystem header)
 };
