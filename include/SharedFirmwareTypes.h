@@ -406,10 +406,11 @@ struct AMSSystemData_s
  */
 struct ACUCoreData_s
 {
-    float pack_voltage;
-    float min_cell_voltage; // IIR filtered min cell voltage
-    float avg_cell_voltage;
-    float max_cell_temp; //IIR filtered max cell temp
+    volt pack_voltage;
+    volt min_cell_voltage; // IIR filtered min cell voltage
+    volt avg_cell_voltage;
+    volt max_cell_voltage;
+    celsius max_cell_temp; //IIR filtered max cell temp
 };
 
 template<size_t num_chips>
