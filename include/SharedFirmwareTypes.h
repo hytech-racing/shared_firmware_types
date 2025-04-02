@@ -407,35 +407,10 @@ struct AMSSystemData_s
 struct ACUCoreData_s
 {
     volt pack_voltage;
-    volt min_cell_voltage; // IIR filtered min cell voltage
+    volt min_cell_voltage;
     volt avg_cell_voltage;
     volt max_cell_voltage;
-    celsius max_cell_temp; //IIR filtered max cell temp
-};
-
-template<size_t num_chips>
-struct ACUFaultData_s
-{
-    size_t global_fault_count;
-    std::array<size_t, num_chips> consecutive_fault_count_per_chip;
-};
-
-template<size_t num_cells>
-struct ACUData_s {
-    volt min_cell_voltage;
-    volt max_cell_voltage;
-    volt pack_voltage;
-    std::array<volt, num_cells> voltages;
-    celsius max_cell_temp; 
-    celsius max_board_temp;
-
-    std::array<bool, num_cells> cb;
-    std::array<celsius, 48> cell_temps;
-
-    size_t global_invalid_packet_count;
-
-    bool charging_enabled;
-    bool acu_ok; // False when one of the three shutdown conditions is met (see AMSSystem header)
+    celsius max_cell_temp;
 };
 
 struct StampedACUCoreData_s : TimestampedData_s
@@ -446,13 +421,19 @@ struct StampedACUCoreData_s : TimestampedData_s
 /**
  * ACUAllData contains the detailed, unprocessed data from ACU sensors.
  */
+template<size_t num_cells, size_t num_cell_temps, size_t num_chips>
 struct ACUAllData_s
 {
     ACUCoreData_s core_data;
-    float voltages[126];
-    float cell_temperatures[48];
-    float board_humidities[6];
+    size_t max_consecutive_invalid_packet_count;
+    volt measured_tractive_system_voltage; 
+    volt measured_pack_voltage;
+    std::array<size_t, num_chips> consecutive_invalid_packet_counts;
+    std::array<volt, num_cells> cell_voltages;
+    std::array<celsius, num_cell_temps> cell_temps;  
 };
+
+using ACUAllDataType_s = ACUAllData_s<126, 48, 12>;
 
 /**
  * Timestamped pedals data. Extends TimestampedData_s to include a received timestamp, in milliseconds.
@@ -534,7 +515,7 @@ struct VCRInterfaceData_s
     veh_vec<InverterData_s> inverter_data = {};
     DashInputState_s dash_input_state = {};
     StampedACUCoreData_s stamped_acu_core_data = {};
-    ACUAllData_s acu_all_data = {};
+    ACUAllDataType_s acu_all_data = {};
     StampedDrivetrainCommand_s latest_drivebrain_command = {};
 };
 
