@@ -426,6 +426,9 @@ struct ACUAllData_s
 {
     ACUCoreData_s core_data;
     size_t max_consecutive_invalid_packet_count;
+    size_t max_cell_voltage_id;
+    size_t min_cell_voltage_id;
+    size_t max_cell_temp_id;
     volt measured_tractive_system_voltage; 
     volt measured_pack_voltage;
     std::array<size_t, num_chips> consecutive_invalid_packet_counts;
