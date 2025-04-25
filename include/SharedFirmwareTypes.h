@@ -95,6 +95,12 @@ struct StampedVehVec : TimestampedData_s
     veh_vec<T> veh_vec_data;
 };
 
+struct FWVersionInfo
+{
+    std::array<char, 9> fw_version_hash = {"deadbeef"};
+    bool project_on_main_or_master = false;
+    bool project_is_dirty = false;
+};
 
 template <typename T>
 struct xyz_vec
@@ -432,6 +438,7 @@ struct ACUAllData_s
     volt measured_tractive_system_voltage; 
     volt measured_pack_voltage;
     float measured_bspd_current;
+    FWVersionInfo fw_version_info;
     std::array<size_t, num_chips> consecutive_invalid_packet_counts;
     std::array<volt, num_cells> cell_voltages;
     std::array<celsius, num_cell_temps> cell_temps;  
@@ -521,14 +528,6 @@ struct VCRInterfaceData_s
     StampedACUCoreData_s stamped_acu_core_data = {};
     ACUAllDataType_s acu_all_data = {};
     StampedDrivetrainCommand_s latest_drivebrain_command = {};
-};
-
-
-struct FWVersionInfo
-{
-    std::array<char, 9> fw_version_hash = {"deadbeef"};
-    bool project_on_main_or_master = false;
-    bool project_is_dirty = false;
 };
 
 struct VCRData_s
