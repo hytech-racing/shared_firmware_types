@@ -428,6 +428,7 @@ struct ACUAllData_s
     size_t max_consecutive_invalid_packet_count;
     volt measured_tractive_system_voltage; 
     volt measured_pack_voltage;
+    FWVersionInfo fw_version_info;
     std::array<size_t, num_chips> consecutive_invalid_packet_counts;
     std::array<volt, num_cells> cell_voltages;
     std::array<celsius, num_cell_temps> cell_temps;  
