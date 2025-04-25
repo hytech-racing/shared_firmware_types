@@ -437,7 +437,7 @@ struct ACUAllData_s
     size_t max_cell_temp_id;
     volt measured_tractive_system_voltage; 
     volt measured_pack_voltage;
-    float bspd_current;
+    float measured_bspd_current;
     FWVersionInfo fw_version_info;
     std::array<size_t, num_chips> consecutive_invalid_packet_counts;
     std::array<volt, num_cells> cell_voltages;
