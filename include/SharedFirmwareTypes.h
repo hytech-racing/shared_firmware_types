@@ -498,6 +498,15 @@ struct VCFHeartbeatData_s
     unsigned long last_heartbeat_time = 0;
 };
 
+enum class VehicleState_e {
+    TRACTIVE_SYSTEM_NOT_ACTIVE = 1,
+    TRACTIVE_SYSTEM_ACTIVE = 2,
+    WANTING_READY_TO_DRIVE = 3,
+    READY_TO_DRIVE = 4,
+    WANTING_RECALIBRATE_PEDALS = 5,
+    RECALIBRATING_PEDALS = 6
+};
+
 /**
  * Struct containing the VCR systems' data. These are generally the outputs of VCR systems.
  */
@@ -507,6 +516,7 @@ struct VCRSystemData_s
     DrivetrainDynamicReport_s drivetrain_data = {};
     TorqueControllerMuxStatus_s tc_mux_status = {};
     VCFHeartbeatData_s vcf_heartbeat_data = {};
+    VehicleState_e vehicle_state_machine_state = VehicleState_e::TRACTIVE_SYSTEM_NOT_ACTIVE;
     bool buzzer_is_active = false;
 
 };
