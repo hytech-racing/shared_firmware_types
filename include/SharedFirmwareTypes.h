@@ -435,13 +435,17 @@ struct ACUAllData_s
     size_t max_cell_voltage_id;
     size_t min_cell_voltage_id;
     size_t max_cell_temp_id;
+    celsius max_board_temp;
+    celsius min_board_temp;
+    celsius avg_board_temp;
     volt measured_tractive_system_voltage; 
     volt measured_pack_voltage;
     float measured_bspd_current;
     FWVersionInfo fw_version_info;
     std::array<size_t, num_chips> consecutive_invalid_packet_counts;
     std::array<volt, num_cells> cell_voltages;
-    std::array<celsius, num_cell_temps> cell_temps;  
+    std::array<celsius, num_cell_temps> cell_temps; 
+    std::array<celsius, num_chips> board_temps; 
 };
 
 using ACUAllDataType_s = ACUAllData_s<126, 48, 12>;
