@@ -439,9 +439,7 @@ struct ACUAllData_s
     size_t max_cell_voltage_id;
     size_t min_cell_voltage_id;
     size_t max_cell_temp_id;
-    celsius max_board_temp;
-    celsius min_board_temp;
-    celsius avg_board_temp;
+    size_t max_board_temp_id;
     volt measured_tractive_system_voltage; 
     volt measured_pack_voltage;
     float measured_bspd_current;
