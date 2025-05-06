@@ -417,6 +417,10 @@ struct ACUCoreData_s
     volt avg_cell_voltage;
     volt max_cell_voltage;
     celsius max_cell_temp;
+    celsius max_board_temp;
+    volt measured_pack_out_voltage;
+    volt measured_ts_out_voltage;
+    volt measured_glv;
 };
 
 struct StampedACUCoreData_s : TimestampedData_s
@@ -442,6 +446,9 @@ struct ACUAllData_s
     volt measured_pack_voltage;
     float measured_bspd_current;
     FWVersionInfo fw_version_info;
+    float valid_packet_rate;
+    float SoC;
+    float SoH;
     std::array<size_t, num_chips> consecutive_invalid_packet_counts;
     std::array<volt, num_cells> cell_voltages;
     std::array<celsius, num_cell_temps> cell_temps; 
