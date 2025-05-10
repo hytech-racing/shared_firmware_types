@@ -388,10 +388,9 @@ struct DrivetrainDynamicReport_s
 };
 
 /**
- * Output data for the AMSSystem. This struct is different from ACUCoreData and
+ * Output data for the ACU Heartbeat. This struct is different from ACUCoreData and
  * ACUAllData because those contain information that is processed and sent by the
- * ACU, while AMSSystemData is the report that comes from the AMSSystem in VCR code.
- * All values are calculated FROM ACUAllData.
+ * ACU. All values are calculated FROM ACUAllData.
  */
 struct ACUHeartbeatData_s
 {
@@ -514,7 +513,7 @@ enum class VehicleState_e {
  */
 struct VCRSystemData_s
 {
-    AMSSystemData_s ams_data = {};
+    ACUHeartbeatData_s acu_heartbeat_data = {};
     DrivetrainDynamicReport_s drivetrain_data = {};
     TorqueControllerMuxStatus_s tc_mux_status = {};
     VCFHeartbeatData_s vcf_heartbeat_data = {};
