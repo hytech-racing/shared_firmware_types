@@ -393,17 +393,10 @@ struct DrivetrainDynamicReport_s
  * ACU, while AMSSystemData is the report that comes from the AMSSystem in VCR code.
  * All values are calculated FROM ACUAllData.
  */
-struct AMSSystemData_s
+struct ACUHeartbeatData_s
 {
-    float min_cell_voltage;
-    float average_cell_voltage;
-    float max_cell_voltage;
-    float min_temp_celsius; // Degrees celsius
-    float average_temp_celsius; // Degrees celsius
-    float max_temp_celsius; // Degrees celsius
-    float total_pack_voltage;
-
-    bool ams_ok; // False when one of the three shutdown conditions is met (see AMSSystem header)
+    bool heartbeat_ok = false;
+    unsigned long last_heartbeat_time = 0;
 };
 
 /**
