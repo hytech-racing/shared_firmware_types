@@ -10,99 +10,6 @@ using speed_rpm = float;
 using torque_nm = float;
 using volt = float;
 using celsius = float;
-using watts = float;
-
-/** 
- * Drivetrain system accessible structs for 
- * requesting change of state
- */
-struct InverterControlWord_s 
-{
-    bool inverter_enable : 1;
-    bool hv_enable : 1;
-    bool driver_enable : 1;
-    bool remove_error : 1;
-};
-
-struct InverterControlInput_s 
-{
-    int16_t speed_rpm_setpoint;
-    float positive_torque_limit; 
-    float negative_torque_limit;
-};
-
-struct InverterControlParams_s
-{
-    uint16_t speed_control_kp; 
-    uint16_t speed_control_ki;
-    uint16_t speed_control_kd;
-};
-
-/** 
- * For the most part these are mirrors of the lower-level CAN struct data, 
- * except with already fully float-ized data
-**/
-struct InverterStatus_s
-{
-    bool new_data : 1;
-    unsigned long last_recv_millis = 0; 
-    bool hv_present : 1;
-    bool connected : 1;
-    bool system_ready : 1;
-    bool error : 1;
-    bool warning : 1;
-    bool quit_dc_on : 1;
-    bool dc_on : 1;
-    bool quit_inverter_on : 1;
-    bool inverter_on : 1;
-    bool derating_on : 1;
-    volt dc_bus_voltage;
-    uint16_t diagnostic_number;
-};
-
-struct InverterTemps_s
-{
-    bool new_data : 1;
-    unsigned long last_recv_millis = 0; 
-    celsius motor_temp;
-    celsius inverter_temp;
-    celsius igbt_temp;
-};
-
-struct InverterPower_s
-{
-    bool new_data : 1;
-    unsigned long last_recv_millis = 0; 
-    watts active_power;
-    float reactive_power;
-};
-
-struct MotorMechanics_s
-{
-    bool new_data : 1;
-    unsigned long last_recv_millis = 0; 
-    watts actual_power;
-    torque_nm actual_torque;
-    speed_rpm actual_speed;
-};
-
-struct InverterControlFeedback_s
-{
-    bool new_data : 1;
-    unsigned long last_recv_millis = 0; 
-    uint16_t speed_control_kp;
-    uint16_t speed_control_ki;
-    uint16_t speed_control_kd;
-};
-
-struct InverterFeedbackData_s
-{
-    InverterStatus_s status;
-    InverterTemps_s temps;
-    InverterPower_s power;
-    MotorMechanics_s motor_mechanics;
-    InverterControlFeedback_s control_feedback;
-};
 
 /**
  * AnalogSensorStatus_e gets packaged along with the AnalogConversion_s struct as
@@ -607,7 +514,7 @@ enum class VehicleState_e {
 struct VCRSystemData_s
 {
     ACUHeartbeatData_s acu_heartbeat_data = {};
-    veh_vec<InverterFeedbackData_s> inverter_data = {};
+    DrivetrainDynamicReport_s drivetrain_data = {};
     TorqueControllerMuxStatus_s tc_mux_status = {};
     VCFHeartbeatData_s vcf_heartbeat_data = {};
     VehicleState_e vehicle_state_machine_state = VehicleState_e::TRACTIVE_SYSTEM_NOT_ACTIVE;
