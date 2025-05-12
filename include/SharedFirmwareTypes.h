@@ -131,7 +131,9 @@ struct PedalSensorData_s
 struct FrontLoadCellData_s
 {
     uint32_t FL_loadcell_analog;
+    bool valid_FL_sample;
     uint32_t FR_loadcell_analog;
+    bool valid_FR_sample;
 };
 
 /**
@@ -202,7 +204,9 @@ struct PedalsSystemData_s
 struct RearLoadCellData_s
 {
     uint32_t RL_loadcell_analog;
+    bool valid_RL_sample;
     uint32_t RR_loadcell_analog;
+    bool valid_RR_sample
 };
 
 /**
