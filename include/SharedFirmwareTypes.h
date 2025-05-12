@@ -353,6 +353,7 @@ struct TorqueControllerMuxStatus_s
 {
     TorqueControllerMuxError_e active_error;
     ControllerMode_e active_controller_mode;
+    ControllerMode_e prev_controller_mode;
     TorqueLimit_e active_torque_limit_enum;
     float active_torque_limit_value;
     bool output_is_bypassing_limits;
