@@ -512,6 +512,18 @@ enum class VehicleState_e {
     RECALIBRATING_PEDALS = 6
 };
 
+enum class DrivetrainState_e
+{
+    NOT_CONNECTED = 0,
+    NOT_ENABLED_NO_HV_PRESENT = 1,
+    NOT_ENABLED_HV_PRESENT = 2,
+    INVERTERS_READY = 3,
+    INVERTERS_HV_ENABLED = 4,
+    ENABLED_DRIVE_MODE = 5,
+    ERROR = 6, 
+    CLEARING_ERRORS = 7
+};
+
 /**
  * Struct containing the VCR systems' data. These are generally the outputs of VCR systems.
  */
@@ -522,6 +534,7 @@ struct VCRSystemData_s
     TorqueControllerMuxStatus_s tc_mux_status = {};
     VCFHeartbeatData_s vcf_heartbeat_data = {};
     VehicleState_e vehicle_state_machine_state = VehicleState_e::TRACTIVE_SYSTEM_NOT_ACTIVE;
+    DrivetrainState_e drivetrain_state_machine_state = DrivetrainState_e::NOT_CONNECTED;
     bool buzzer_is_active = false;
 
 };
