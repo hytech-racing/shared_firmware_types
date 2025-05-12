@@ -206,7 +206,7 @@ struct RearLoadCellData_s
     uint32_t RL_loadcell_analog;
     bool valid_RL_sample;
     uint32_t RR_loadcell_analog;
-    bool valid_RR_sample
+    bool valid_RR_sample;
 };
 
 /**
