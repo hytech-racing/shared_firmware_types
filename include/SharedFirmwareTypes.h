@@ -532,6 +532,8 @@ struct VCRInterfaceData_s
     ShutdownSensingData_s shutdown_sensing_data = {};
     RearLoadCellData_s rear_loadcell_data = {};
     RearSusPotData_s rear_suspot_data = {};
+    FrontLoadCellData_s front_loadcell_data = {};
+    FrontSusPotData_s front_suspot_data = {};
     CurrentSensorData_s current_sensor_data = {};
     StampedPedalsSystemData_s recvd_pedals_data = {};
     veh_vec<InverterData_s> inverter_data = {};
