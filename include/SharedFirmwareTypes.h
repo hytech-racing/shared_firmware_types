@@ -525,6 +525,12 @@ enum class DrivetrainState_e
     CLEARING_ERRORS = 7
 };
 
+struct DrivebrainControllerStatus_s 
+{
+    bool drivebrain_is_in_control = false;
+    bool drivebrain_controller_timing_failure = false;
+};
+
 /**
  * Struct containing the VCR systems' data. These are generally the outputs of VCR systems.
  */
@@ -537,6 +543,7 @@ struct VCRSystemData_s
     VehicleState_e vehicle_state_machine_state = VehicleState_e::TRACTIVE_SYSTEM_NOT_ACTIVE;
     DrivetrainState_e drivetrain_state_machine_state = DrivetrainState_e::NOT_CONNECTED;
     bool buzzer_is_active = false;
+    DrivebrainControllerStatus_s db_cntrl_status = {};
 
 };
 
