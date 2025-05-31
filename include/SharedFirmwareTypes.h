@@ -414,6 +414,7 @@ struct ACUCoreData_s
     volt avg_cell_voltage;
     volt max_cell_voltage;
     celsius max_cell_temp;
+    celsius min_cell_temp;
     celsius max_board_temp;
     volt measured_pack_out_voltage;
     volt measured_ts_out_voltage;
