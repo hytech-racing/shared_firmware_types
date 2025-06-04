@@ -372,8 +372,6 @@ struct DrivetrainSpeedCommand_s
 {
     veh_vec<speed_rpm> desired_speeds;
     veh_vec<torque_nm> torque_limits;
-    // HACK: doing this to support 
-    explicit DrivetrainSpeedCommand_s(const DrivetrainTorqueCommand_s & cmd) : desired_speeds(cmd.torque_setpoints), torque_limits(cmd.torque_limits) { }
 };
 
 using DrivetrainCommand_s = DrivetrainSpeedCommand_s;
@@ -382,13 +380,12 @@ using DrivetrainCommand_s = DrivetrainSpeedCommand_s;
 
 struct StampedDrivetrainTorqueCommand_s
 {
-    StampedVehVec<speed_rpm> torque_limits;
     StampedVehVec<torque_nm> torque_setpoints;
 
     DrivetrainTorqueCommand_s get_command()
     {
         return {.torque_setpoints= torque_setpoints.veh_vec_data, 
-                .torque_limits = torque_limits.veh_vec_data};
+                .torque_limits = torque_setpoints.veh_vec_data};
     }
 };
 
