@@ -364,13 +364,11 @@ struct TorqueControllerMuxStatus_s
 /// @brief Stores setpoints for a command to the Drivetrain, containing speed setpoints and torque limits for each motor. These setpoints are defined in the torque controllers cycled by the TC Muxer. 
 /// The Speeds unit is rpm and are the targeted speeds for each wheel of the car.
 /// The torques unit is nm and is the max torque requested from the inverter to reach such speeds.
-struct DrivetrainSpeedCommand_s
+struct DrivetrainCommand_s
 {
     veh_vec<speed_rpm> desired_speeds;
     veh_vec<torque_nm> torque_limits;
 };
-
-using DrivetrainCommand_s = DrivetrainSpeedCommand_s;
 
 struct DrivetrainTorqueCommand_s
 {
