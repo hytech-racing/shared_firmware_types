@@ -370,6 +370,8 @@ struct DrivetrainSpeedCommand_s
     veh_vec<torque_nm> torque_limits;
 };
 
+using DrivetrainCommand_s = DrivetrainSpeedCommand_s;
+`
 struct DrivetrainTorqueCommand_s
 {
     veh_vec<torque_nm> torque_limits;
