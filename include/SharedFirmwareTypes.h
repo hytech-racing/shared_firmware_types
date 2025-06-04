@@ -359,7 +359,11 @@ struct TorqueControllerMuxStatus_s
     bool output_is_bypassing_limits;
 };
 
-
+struct DrivetrainTorqueCommand_s
+{
+    veh_vec<torque_nm> torque_setpoints;
+    veh_vec<torque_nm> torque_limits;
+};
 
 /// @brief Stores setpoints for a command to the Drivetrain, containing speed setpoints and torque limits for each motor. These setpoints are defined in the torque controllers cycled by the TC Muxer. 
 /// The Speeds unit is rpm and are the targeted speeds for each wheel of the car.
@@ -368,15 +372,13 @@ struct DrivetrainSpeedCommand_s
 {
     veh_vec<speed_rpm> desired_speeds;
     veh_vec<torque_nm> torque_limits;
+    // HACK: doing this to support 
+    explicit DrivetrainSpeedCommand_s(const DrivetrainTorqueCommand_s & cmd) : desired_speeds(cmd.torque_setpoints), torque_limits(cmd.torque_limits) { }
 };
 
 using DrivetrainCommand_s = DrivetrainSpeedCommand_s;
 
-struct DrivetrainTorqueCommand_s
-{
-    veh_vec<torque_nm> torque_limits;
-    veh_vec<torque_nm> torque_setpoints;
-};
+
 
 struct StampedDrivetrainTorqueCommand_s
 {
