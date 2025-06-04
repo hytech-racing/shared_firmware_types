@@ -361,25 +361,30 @@ struct TorqueControllerMuxStatus_s
 
 
 
-/// @brief Stores setpoints for a command to the Drivetrain, containing speed and torque setpoints for each motor. These setpoints are defined in the torque controllers cycled by the TC Muxer. 
+/// @brief Stores setpoints for a command to the Drivetrain, containing speed setpoints and torque limits for each motor. These setpoints are defined in the torque controllers cycled by the TC Muxer. 
 /// The Speeds unit is rpm and are the targeted speeds for each wheel of the car.
 /// The torques unit is nm and is the max torque requested from the inverter to reach such speeds.
-struct DrivetrainCommand_s
+struct DrivetrainSpeedCommand_s
 {
     veh_vec<speed_rpm> desired_speeds;
     veh_vec<torque_nm> torque_limits;
 };
 
-
-struct StampedDrivetrainCommand_s
+struct DrivetrainTorqueCommand_s
 {
-    StampedVehVec<speed_rpm> desired_speeds;
-    StampedVehVec<torque_nm> torque_limits;
+    veh_vec<torque_nm> torque_limits;
+    veh_vec<torque_nm> torque_setpoints;
+};
 
-    DrivetrainCommand_s get_command()
+struct StampedDrivetrainTorqueCommand_s
+{
+    StampedVehVec<speed_rpm> torque_limits;
+    StampedVehVec<torque_nm> torque_setpoints;
+
+    DrivetrainTorqueCommand_s get_command()
     {
-        return {.desired_speeds = desired_speeds.veh_vec_data, 
-                .torque_limits = torque_limits.veh_vec_data};
+        return {.torque_limits= torque_limits.veh_vec_data, 
+                .torque_setpoints = torque_setpoints.veh_vec_data};
     }
 };
 
@@ -566,7 +571,7 @@ struct VCRInterfaceData_s
     DashInputState_s dash_input_state = {};
     StampedACUCoreData_s stamped_acu_core_data = {};
     ACUAllDataType_s acu_all_data = {};
-    StampedDrivetrainCommand_s latest_drivebrain_command = {};
+    StampedDrivetrainTorqueCommand_s latest_drivebrain_command = {};
 };
 
 struct VCRData_s

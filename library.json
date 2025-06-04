@@ -13,6 +13,7 @@
         "email": "justin@goliath.org"
       }
     ],
+    "exclude": "verify_compile.cpp",
     "frameworks": "*",
     "platforms": "*"
 }
