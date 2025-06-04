@@ -387,8 +387,8 @@ struct StampedDrivetrainTorqueCommand_s
 
     DrivetrainTorqueCommand_s get_command()
     {
-        return {.torque_limits= torque_limits.veh_vec_data, 
-                .torque_setpoints = torque_setpoints.veh_vec_data};
+        return {.torque_setpoints= torque_setpoints.veh_vec_data, 
+                .torque_limits = torque_limits.veh_vec_data};
     }
 };
 
