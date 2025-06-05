@@ -380,12 +380,12 @@ using DrivetrainCommand_s = DrivetrainSpeedCommand_s;
 
 struct StampedDrivetrainTorqueCommand_s
 {
-    StampedVehVec<torque_nm> torque_setpoints;
+    StampedVehVec<torque_nm> t_sets;
 
     DrivetrainTorqueCommand_s get_command()
     {
-        return {.torque_setpoints= torque_setpoints.veh_vec_data, 
-                .torque_limits = torque_setpoints.veh_vec_data};
+        return {.torque_setpoints= t_sets.veh_vec_data, 
+                .torque_limits = t_sets.veh_vec_data};
     }
 };
 
