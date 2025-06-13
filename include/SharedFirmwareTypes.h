@@ -453,7 +453,8 @@ struct ACUAllData_s
     std::array<size_t, num_chips> consecutive_invalid_packet_counts;
     std::array<volt, num_cells> cell_voltages;
     std::array<celsius, num_cell_temps> cell_temps; 
-    std::array<celsius, num_chips> board_temps; 
+    std::array<celsius, num_chips> board_temps;
+    bool shutdown_has_gone_low;
 };
 
 using ACUAllDataType_s = ACUAllData_s<126, 48, 12>;
