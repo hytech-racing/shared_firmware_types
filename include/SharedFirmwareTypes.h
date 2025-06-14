@@ -421,9 +421,13 @@ struct ACUCoreData_s
     celsius max_cell_temp;
     celsius min_cell_temp;
     celsius max_board_temp;
-    volt measured_pack_out_voltage;
-    volt measured_ts_out_voltage;
-    volt measured_glv;
+    volt max_measured_pack_out_voltage;
+    volt max_measured_ts_out_voltage;
+    volt max_measured_glv;
+    volt min_measured_pack_out_voltage;
+    volt min_measured_ts_out_voltage;
+    volt min_measured_glv;
+    volt min_shdn_out_voltage;
 };
 
 struct StampedACUCoreData_s : TimestampedData_s
