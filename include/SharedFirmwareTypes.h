@@ -534,6 +534,11 @@ struct DrivebrainControllerStatus_s
 /**
  * Struct containing the VCR systems' data. These are generally the outputs of VCR systems.
  */
+struct VCRLOCData {
+    bool acu_loc = false;
+    bool vcf_loc = false;
+};
+
 struct VCRSystemData_s
 {
     ACUHeartbeatData_s acu_heartbeat_data = {};
@@ -544,7 +549,7 @@ struct VCRSystemData_s
     DrivetrainState_e drivetrain_state_machine_state = DrivetrainState_e::NOT_CONNECTED;
     bool buzzer_is_active = false;
     DrivebrainControllerStatus_s db_cntrl_status = {};
-
+    VCRLOCData vcr_loc_data = {};
 };
 
 /**
