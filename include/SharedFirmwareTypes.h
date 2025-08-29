@@ -541,7 +541,13 @@ struct DrivebrainControllerStatus_s
     bool drivebrain_is_in_control = false;
     bool drivebrain_controller_timing_failure = false;
 };
-
+/**
+ * Struct containing the location data for the Loss of communication of VCR with other other ECUs.
+ */
+struct VCRLOCData {
+    bool acu_loc = false;
+    bool vcf_loc = false;
+};
 /**
  * Struct containing the VCR systems' data. These are generally the outputs of VCR systems.
  */
@@ -555,7 +561,7 @@ struct VCRSystemData_s
     DrivetrainState_e drivetrain_state_machine_state = DrivetrainState_e::NOT_CONNECTED;
     bool buzzer_is_active = false;
     DrivebrainControllerStatus_s db_cntrl_status = {};
-
+    VCRLOCData vcr_loc_data = {};
 };
 
 /**
