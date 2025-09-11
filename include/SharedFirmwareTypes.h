@@ -438,6 +438,7 @@ struct ACUAllData_s
     size_t max_board_temp_id;
     volt measured_tractive_system_voltage; 
     volt measured_pack_voltage;
+    volt measured_shdn_voltage;
     float measured_bspd_current;
     FWVersionInfo fw_version_info;
     float valid_packet_rate;
