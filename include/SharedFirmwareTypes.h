@@ -457,8 +457,11 @@ struct ACUAllData_s
     float SoH;
     std::array<size_t, num_chips> consecutive_invalid_packet_counts;
     std::array<volt, num_cells> cell_voltages;
+    std::array<volt, num_cells> imd_voltages;
     std::array<celsius, num_cell_temps> cell_temps; 
+    std::array<celsius, 4 * num_chips> imd_cell_temperatures;
     std::array<celsius, num_chips> board_temps;
+    std::array<celsius, num_board_thermistors> imd_board_temperatures;
     bool shutdown_has_gone_low;
 };
 
