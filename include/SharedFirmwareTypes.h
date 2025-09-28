@@ -391,6 +391,18 @@ struct DrivetrainCommand_s
     veh_vec<torque_nm> torque_limits;
 };
 
+struct StampedDrivetrainCommand_s
+{
+    StampedVehVec<speed_rpm> desired_speeds;
+    StampedVehVec<torque_nm> torque_limits;
+
+    DrivetrainCommand_s get_command()
+    {
+        return {.desired_speeds= desired_speeds.veh_vec_data, 
+                .torque_limits = torque_limits.veh_vec_data};
+    }
+};
+
 struct DrivetrainTorqueCommand_s
 {
     veh_vec<torque_nm> torque_limits;
