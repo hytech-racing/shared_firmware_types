@@ -219,6 +219,15 @@ struct RearSusPotData_s
 };
 
 /**
+ * 
+*/
+struct ThermistorData_s
+{
+    uint32_t thermistor_analog;
+    float thermistor_degrees_C;
+}
+
+/**
  * Directly copied from HT08 MCU SharedDataTypes.h.
  */
 struct VectorNavData_s
