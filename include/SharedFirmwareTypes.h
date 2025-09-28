@@ -219,13 +219,25 @@ struct RearSusPotData_s
 };
 
 /**
- * 
+ * Creating Thermistor Data structure to account for storage of analog readings and actual temperature in degrees celsius
 */
 struct ThermistorData_s
 {
     uint32_t thermistor_analog;
     float thermistor_degrees_C;
-}
+};
+
+struct VCRThermistorData_s
+{
+    ThermistorData_s thermistor_0;
+    ThermistorData_s thermistor_1;
+    ThermistorData_s thermistor_2;
+    ThermistorData_s thermistor_3;
+    ThermistorData_s thermistor_4;
+    ThermistorData_s thermistor_5;
+    ThermistorData_s thermistor_6;
+    ThermistorData_s thermistor_7;
+};
 
 /**
  * Directly copied from HT08 MCU SharedDataTypes.h.
@@ -575,6 +587,7 @@ struct VCRInterfaceData_s
     RearSusPotData_s rear_suspot_data = {};
     FrontLoadCellData_s front_loadcell_data = {};
     FrontSusPotData_s front_suspot_data = {};
+    VCRThermistorData_s thermistor_data = {};
     CurrentSensorData_s current_sensor_data = {};
     StampedPedalsSystemData_s recvd_pedals_data = {};
     veh_vec<InverterData_s> inverter_data = {};
