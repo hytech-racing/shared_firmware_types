@@ -219,6 +219,27 @@ struct RearSusPotData_s
 };
 
 /**
+ * Creating Thermistor Data structure to account for storage of analog readings and actual temperature in degrees celsius
+*/
+struct ThermistorData_s
+{
+    uint32_t thermistor_analog;
+    float thermistor_degrees_C;
+};
+
+struct VCRThermistorData_s
+{
+    ThermistorData_s thermistor_0;
+    ThermistorData_s thermistor_1;
+    ThermistorData_s thermistor_2;
+    ThermistorData_s thermistor_3;
+    ThermistorData_s thermistor_4;
+    ThermistorData_s thermistor_5;
+    ThermistorData_s thermistor_6;
+    ThermistorData_s thermistor_7;
+};
+
+/**
  * Directly copied from HT08 MCU SharedDataTypes.h.
  */
 struct VectorNavData_s
@@ -368,6 +389,18 @@ struct DrivetrainCommand_s
 {
     veh_vec<speed_rpm> desired_speeds;
     veh_vec<torque_nm> torque_limits;
+};
+
+struct StampedDrivetrainCommand_s
+{
+    StampedVehVec<speed_rpm> desired_speeds;
+    StampedVehVec<torque_nm> torque_limits;
+
+    DrivetrainCommand_s get_command()
+    {
+        return {.desired_speeds= desired_speeds.veh_vec_data, 
+                .torque_limits = torque_limits.veh_vec_data};
+    }
 };
 
 struct DrivetrainTorqueCommand_s
@@ -577,13 +610,14 @@ struct VCRInterfaceData_s
     RearSusPotData_s rear_suspot_data = {};
     FrontLoadCellData_s front_loadcell_data = {};
     FrontSusPotData_s front_suspot_data = {};
+    VCRThermistorData_s thermistor_data = {};
     CurrentSensorData_s current_sensor_data = {};
     StampedPedalsSystemData_s recvd_pedals_data = {};
     veh_vec<InverterData_s> inverter_data = {};
     DashInputState_s dash_input_state = {};
     StampedACUCoreData_s stamped_acu_core_data = {};
     ACUAllDataType_s acu_all_data = {};
-    StampedDrivetrainTorqueCommand_s latest_drivebrain_command = {};
+    StampedDrivetrainCommand_s latest_drivebrain_command = {};
 };
 
 struct VCRData_s
