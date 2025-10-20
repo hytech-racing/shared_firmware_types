@@ -10,6 +10,7 @@ using speed_rpm = float;
 using torque_nm = float;
 using volt = float;
 using celsius = float;
+using time_ms = uint32_t;
 
 /**
  * AnalogSensorStatus_e gets packaged along with the AnalogConversion_s struct as
