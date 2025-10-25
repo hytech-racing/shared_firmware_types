@@ -618,7 +618,8 @@ struct VCRInterfaceData_s
     DashInputState_s dash_input_state = {};
     StampedACUCoreData_s stamped_acu_core_data = {};
     ACUAllDataType_s acu_all_data = {};
-    StampedDrivetrainCommand_s latest_drivebrain_command = {};
+    StampedDrivetrainCommand_s latest_drivebrain_telem_command = {};
+    StampedDrivetrainCommand_s latest_drivebrain_auxillary_command = {};
 };
 
 struct VCRData_s
