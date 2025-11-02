@@ -405,6 +405,16 @@ struct StampedDrivetrainCommand_s
     }
 };
 
+struct DrivebrainMessageLatencyInfo_s {
+    bool timing_failure; 
+    unsigned long worst_latency_millis; 
+
+    bool speed_setpoint_msg_too_latent; 
+    bool torque_limit_message_too_latent;
+    bool not_all_messages_received; 
+    bool latency_diff_too_high;
+};
+
 struct DrivetrainTorqueCommand_s
 {
     veh_vec<torque_nm> torque_limits;
@@ -598,6 +608,8 @@ struct VCRSystemData_s
     bool buzzer_is_active = false;
     DrivebrainControllerStatus_s db_cntrl_status = {};
     VCRLOCData vcr_loc_data = {};
+    DrivebrainMessageLatencyInfo_s aux_latency_info; 
+    DrivebrainMessageLatencyInfo_s telem_latency_info;
 };
 
 /**
