@@ -41,7 +41,7 @@ struct AnalogConversion_s
 template <int N>
 struct AnalogConversionPacket_s
 {
-    AnalogConversion_s conversions[N];
+    std::array <AnalogConversion_s, N> conversions;
 };
 
 /**
