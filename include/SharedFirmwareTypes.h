@@ -241,6 +241,11 @@ struct VCRThermistorData_s
     ThermistorData_s thermistor_7;
 };
 
+struct FlowmeterData_s
+{
+  float flowmeter_gallons_per_min;
+}
+
 /**
  * Directly copied from HT08 MCU SharedDataTypes.h.
  */
@@ -625,6 +630,7 @@ struct VCRInterfaceData_s
     FrontLoadCellData_s front_loadcell_data = {};
     FrontSusPotData_s front_suspot_data = {};
     VCRThermistorData_s thermistor_data = {};
+    FlowmeterData_s flowmeter_data = {};
     CurrentSensorData_s current_sensor_data = {};
     StampedPedalsSystemData_s recvd_pedals_data = {};
     veh_vec<InverterData_s> inverter_data = {};
