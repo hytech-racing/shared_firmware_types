@@ -244,7 +244,7 @@ struct VCRThermistorData_s
 struct FlowmeterData_s
 {
   float flowmeter_gallons_per_min;
-}
+};
 
 /**
  * Directly copied from HT08 MCU SharedDataTypes.h.
