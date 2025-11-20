@@ -152,8 +152,8 @@ struct FrontSusPotData_s
  */
 struct SteeringSensorData_s
 {
-    // Analog steering sensor data, in degrees.
-    float analog_steering_degrees;
+    // Analog steering sensor data raw (0-4095)
+    float analog_steering_raw;
     // Digital steering sensor data, unconverted (0-4095)
     float digital_steering_analog;
 };
@@ -201,6 +201,11 @@ struct PedalsSystemData_s
     float regen_percent; // When brake pedal is 0%, regen_percent is 0.0. When brakes are at mechanical_activation_percentage,
                          // regen_percent is at 1.0. For instance, if mech activation percentage was 60%, then when brake
                          // travel is at 40%, regen_percent would be 0.667. Beyond that, regen_percent is clamped to 1.0.
+};
+
+struct SteeringSystemData_s
+{
+    bool steering_is_implausible : 1;
 };
 
 struct RearLoadCellData_s
