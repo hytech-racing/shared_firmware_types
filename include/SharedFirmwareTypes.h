@@ -152,8 +152,8 @@ struct FrontSusPotData_s
  */
 struct SteeringSensorData_s
 {
-    // Analog steering sensor data raw (0-4095)
-    float analog_steering_raw;
+    // Analog steering sensor data, in degrees.
+    float analog_steering_degrees;
     // Digital steering sensor data, unconverted (0-4095)
     float digital_steering_analog;
 };
