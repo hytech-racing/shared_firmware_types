@@ -478,6 +478,8 @@ struct ACUCoreData_s
     volt min_measured_ts_out_voltage;
     volt min_measured_glv;
     volt min_shdn_out_voltage;
+    float SoC;
+    float SoH;
 };
 
 struct StampedACUCoreData_s : TimestampedData_s
@@ -503,8 +505,6 @@ struct ACUAllData_s
     float measured_bspd_current;
     FWVersionInfo fw_version_info;
     float valid_packet_rate;
-    float SoC;
-    float SoH;
     std::array<size_t, num_chips> consecutive_invalid_packet_counts;
     std::array<volt, num_cells> cell_voltages;
     std::array<celsius, num_cell_temps> cell_temps; 
