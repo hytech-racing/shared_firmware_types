@@ -462,8 +462,8 @@ struct ACUCoreData_s
     volt min_measured_ts_out_voltage;
     volt min_measured_glv;
     volt min_shdn_out_voltage;
-    bool air_plus_welded;
-    bool air_minus_welded;
+    bool high_side_contactor_welded;
+    bool low_side_contactor_welded;
 };
 
 struct StampedACUCoreData_s : TimestampedData_s
