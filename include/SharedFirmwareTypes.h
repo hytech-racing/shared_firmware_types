@@ -178,8 +178,7 @@ struct DashInputState_s
     bool mc_reset_btn_is_pressed : 1; // Resets the motor controller errors
     bool start_btn_is_pressed : 1; // The start button is the READY_TO_DRIVE button
     bool data_btn_is_pressed : 1;
-    bool left_paddle_is_pressed : 1; // Paddle shifters were not on HT08, but the code is compatible with them.
-    bool right_paddle_is_pressed : 1; // Paddle shifters were not on HT08, but the code is compatible with them.
+    bool BUTTON_2 : 1;
     ControllerMode_e dial_state;
 };
 
