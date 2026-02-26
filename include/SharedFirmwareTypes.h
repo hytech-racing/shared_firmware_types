@@ -174,6 +174,7 @@ enum class ControllerMode_e
 struct DashInputState_s
 {
     bool brightness_ctrl_btn_is_pressed : 1;
+    bool preset_btn_is_pressed : 1;
     bool mc_reset_btn_is_pressed : 1; // Resets the motor controller errors
     bool start_btn_is_pressed : 1; // The start button is the READY_TO_DRIVE button
     bool data_btn_is_pressed : 1;
