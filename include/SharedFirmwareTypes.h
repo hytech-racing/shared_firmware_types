@@ -127,8 +127,7 @@ struct PedalSensorData_s
     uint32_t accel_2;
     uint32_t brake_1;
     uint32_t brake_2;
-    uint32_t brake_pressure_front;
-    uint32_t brake_pressure_rear;
+    uint32_t pedal_pressure;
 };
 
 struct FrontLoadCellData_s
