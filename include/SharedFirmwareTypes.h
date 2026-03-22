@@ -476,6 +476,11 @@ struct ACUCoreData_s
     volt min_measured_ts_out_voltage;
     volt min_measured_glv;
     volt min_shdn_out_voltage;
+    volt hv_plus_out_voltage;
+    volt main_ok_voltage;
+    volt main_under_threshold_voltage;
+    volt precharge_under_threshold_voltage;
+    
     bool high_side_contactor_welded;
     bool low_side_contactor_welded;
 };
