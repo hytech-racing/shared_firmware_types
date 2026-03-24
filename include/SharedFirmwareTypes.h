@@ -480,6 +480,7 @@ struct ACUCoreData_s
     volt main_ok_voltage;
     volt main_under_threshold_voltage;
     volt precharge_under_threshold_voltage;
+    float tractive_system_current;
     
     bool high_side_contactor_welded;
     bool low_side_contactor_welded;
