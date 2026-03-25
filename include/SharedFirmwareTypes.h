@@ -456,6 +456,16 @@ struct ACUHeartbeatData_s
     unsigned long last_heartbeat_time = 0;
 };
 
+enum class ACUState_e
+{
+    STARTUP = 0, 
+    ACTIVE = 1, 
+    CHARGING = 2, 
+    FAULTED = 3,
+    WELDED = 4,
+    WELDCHECK = 5 
+};
+
 /**
  * Minimum data that the ACU must send for the car to run. Detailed temps/voltages are not minimum-viable. The
  * ACUAllData message contains an instance of the data in this ACUCoreData struct.
@@ -478,10 +488,12 @@ struct ACUCoreData_s
     volt min_shdn_out_voltage;
     volt hv_plus_out_voltage;
     volt main_ok_voltage;
+    volt precharge_ok_voltage;
     volt main_under_threshold_voltage;
     volt precharge_under_threshold_voltage;
     float tractive_system_current;
-    
+    ACUState_e acu_sm_state;
+
     bool high_side_contactor_welded;
     bool low_side_contactor_welded;
 };
