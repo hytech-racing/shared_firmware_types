@@ -284,17 +284,22 @@ struct CurrentSensorData_s
  * nodes to probe and four relay inputs to probe (total of 9 booleans).
  */
 struct ShutdownSensingData_s
-{
-    bool i_shutdown_in : 1;
-    bool j_bspd_relay : 1;
-    bool k_watchdog_relay : 1;
-    bool l_bms_relay : 1;
-    bool m_imd_relay : 1;
+{   
 
+    // BSPD indicators 
     bool bspd_is_ok : 1;
+    bool bspd_fault : 1;
+    bool bspd_missing : 1;
+
+    // Shutdown relays
     bool watchdog_is_ok : 1;
     bool bms_is_ok : 1;
     bool imd_is_ok : 1;
+    bool vcr_sw_is_ok : 1;
+
+    // miscellaneous senses
+    bool lv_present : 1;
+
 };
 
 /**
@@ -308,6 +313,7 @@ struct VCREthernetLinkData_s
     bool teensy_link : 1;
     bool debug_link : 1;
     bool ubiquiti_link : 1;
+    bool vn_link: 1;
 };
 
 /**
