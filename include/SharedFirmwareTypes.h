@@ -272,6 +272,9 @@ struct CurrentSensorData_s
     float twentyfour_volt_sensor; // Senses the 24V power line
     float current_sensor_unfiltered;
     float current_refererence_unfiltered;
+
+    bool bspd_brake_high_sense;
+    bool bspd_current_high_sense;
 };
 
 /**
