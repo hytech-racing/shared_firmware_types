@@ -201,6 +201,27 @@ struct PedalsSystemData_s
                          // travel is at 40%, regen_percent would be 0.667. Beyond that, regen_percent is clamped to 1.0.
 };
 
+struct SteeringSystemData_s : TimestampedData_s
+{
+    uint32_t analog_raw;
+    uint32_t digital_raw;
+
+    float analog_steering_angle; //in degrees
+    float digital_steering_angle; //in degrees
+    float output_steering_angle; // represents the better output of the two sensors or some combination of the values
+
+    float analog_steering_velocity_deg_s; //in degrees per second
+    float digital_steering_velocity_deg_s;
+
+    bool digital_oor_implausibility;
+    bool analog_oor_implausibility;
+    bool sensor_disagreement_implausibility;
+    bool dtheta_exceeded_analog;
+    bool dtheta_exceeded_digital;
+    bool both_sensors_fail;
+    bool interface_sensor_error;
+};
+
 struct RearLoadCellData_s
 {
     uint32_t RL_loadcell_analog;
