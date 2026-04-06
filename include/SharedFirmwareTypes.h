@@ -666,6 +666,7 @@ struct VCRInterfaceData_s
     ACUAllDataType_s acu_all_data = {};
     StampedDrivetrainCommand_s latest_drivebrain_telem_command = {};
     StampedDrivetrainCommand_s latest_drivebrain_auxillary_command = {};
+    SteeringSensorData_s steering_data = {};
 };
 
 struct VCRData_s
