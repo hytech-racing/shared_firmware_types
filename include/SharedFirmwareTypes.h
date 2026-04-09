@@ -202,7 +202,7 @@ struct PedalsSystemData_s
                          // travel is at 40%, regen_percent would be 0.667. Beyond that, regen_percent is clamped to 1.0.
 };
 
-struct SteeringSystemData_s : TimestampedData_s
+struct SteeringSystemData_s
 {
     uint32_t analog_raw;
     uint32_t digital_raw;
@@ -569,6 +569,15 @@ using ACUAllDataType_s = ACUAllData_s<126, 48, 12>;
 struct StampedPedalsSystemData_s : TimestampedData_s
 {
     PedalsSystemData_s pedals_data;
+    bool heartbeat_ok = false;
+};
+
+/**
+ * Timestamped steering data. Extends TimestampedData_s to include a received timestamp in milliseconds.
+ */
+struct StampedSteeringSystemData_s : TimestampedData_s
+{
+    SteeringSystemData_s steering_data;
     bool heartbeat_ok = false;
 };
 
