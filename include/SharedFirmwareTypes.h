@@ -285,19 +285,25 @@ struct CurrentSensorData_s
 struct ShutdownSensingData_s
 {   
 
-    // BSPD indicators 
+    // Shutdown inputs
     bool bspd_is_ok : 1;
-    bool bspd_fault : 1;
-    bool bspd_missing : 1;
-
-    // Shutdown relays
-    bool watchdog_is_ok : 1;
-    bool bms_is_ok : 1;
     bool imd_is_ok : 1;
+    bool bms_is_ok : 1;
     bool vcr_sw_is_ok : 1;
 
-    // miscellaneous senses
-    bool lv_present : 1;
+    // Shutdown relays
+    bool shdn_h_is_ok : 1;
+    bool shdn_i_is_ok : 1;
+    bool shdn_j_is_ok : 1;
+    bool shdn_k_is_ok : 1;
+    bool shdn_l_is_ok : 1;
+
+    // Ethernet links
+    bool acu_is_linked : 1;
+    bool teensy_is_linked : 1;
+    bool vcf_is_linked : 1;
+    bool ubiquiti_is_linked : 1;
+    bool db_is_linked : 1;
 
 };
 
