@@ -221,8 +221,6 @@ struct SteeringSystemData_s
     bool dtheta_exceeded_digital;
     bool both_sensors_fail;
     bool interface_sensor_error;
-    bool analog_clipped;
-    bool digital_clipped;
 };
 
 struct RearLoadCellData_s
