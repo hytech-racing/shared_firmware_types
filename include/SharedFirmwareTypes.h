@@ -157,6 +157,27 @@ struct SteeringSensorData_s
     float digital_steering_analog;
 };
 
+enum class SteeringEncoderStatus_e
+{
+    NOMINAL = 0,
+    ERROR = 1,
+};
+
+struct EncoderErrorFlags_s
+{
+    bool dataInvalid              = false;
+    bool operatingLimit           = false;
+    bool noData                   = false;
+};
+
+struct SteeringEncoderReading_s
+{
+    float angle = 0.0f;
+    int rawValue = 0;
+    SteeringEncoderStatus_e status = SteeringEncoderStatus_e::NOMINAL;
+    EncoderErrorFlags_s errors;
+};
+
 /**
  * Enum for the modes on the dial, corresponds directly to dial index position.
  */
@@ -172,6 +193,7 @@ enum class ControllerMode_e
 
 struct DashInputState_s
 {
+    bool btn_dim_read_is_pressed : 1;
     bool brightness_ctrl_btn_is_pressed : 1;
     bool preset_btn_is_pressed : 1;
     bool mc_reset_btn_is_pressed : 1; // Resets the motor controller errors
@@ -198,6 +220,27 @@ struct PedalsSystemData_s
     float regen_percent; // When brake pedal is 0%, regen_percent is 0.0. When brakes are at mechanical_activation_percentage,
                          // regen_percent is at 1.0. For instance, if mech activation percentage was 60%, then when brake
                          // travel is at 40%, regen_percent would be 0.667. Beyond that, regen_percent is clamped to 1.0.
+};
+
+struct SteeringSystemData_s
+{
+    uint32_t analog_raw;
+    uint32_t digital_raw;
+
+    float analog_steering_angle; //in degrees
+    float digital_steering_angle; //in degrees
+    float output_steering_angle; // represents the better output of the two sensors or some combination of the values
+
+    float analog_steering_velocity_deg_s; //in degrees per second
+    float digital_steering_velocity_deg_s;
+
+    bool digital_oor_implausibility;
+    bool analog_oor_implausibility;
+    bool sensor_disagreement_implausibility;
+    bool dtheta_exceeded_analog;
+    bool dtheta_exceeded_digital;
+    bool both_sensors_fail;
+    bool interface_sensor_error;
 };
 
 struct RearLoadCellData_s
@@ -556,6 +599,15 @@ struct StampedPedalsSystemData_s : TimestampedData_s
 };
 
 /**
+ * Timestamped steering data. Extends TimestampedData_s to include a received timestamp in milliseconds.
+ */
+struct StampedSteeringSystemData_s : TimestampedData_s
+{
+    SteeringSystemData_s steering_data;
+    bool heartbeat_ok = false;
+};
+
+/**
  * Struct containing the VCR systems' data. These are generally the outputs of VCR systems.
  */
 struct VCFSystemData_s
@@ -604,7 +656,9 @@ enum class VehicleState_e {
     WANTING_READY_TO_DRIVE = 2,
     READY_TO_DRIVE = 3,
     WANTING_RECALIBRATE_PEDALS = 4,
-    RECALIBRATING_PEDALS = 5
+    RECALIBRATING_PEDALS = 5,
+    WANTING_RECALIBRATE_STEERING = 6,
+    RECALIBRATING_STEERING = 7
 };
 
 enum class DrivetrainState_e
