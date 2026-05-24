@@ -275,10 +275,6 @@ struct VCRThermistorData_s
     ThermistorData_s thermistor_1;
     ThermistorData_s thermistor_2;
     ThermistorData_s thermistor_3;
-    ThermistorData_s thermistor_4;
-    ThermistorData_s thermistor_5;
-    ThermistorData_s thermistor_6;
-    ThermistorData_s thermistor_7;
 };
 
 struct FlowmeterData_s
