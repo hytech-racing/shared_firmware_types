@@ -578,6 +578,7 @@ struct ACUAllData_s
     float SoH;
     float lifetime_ah_throughput;
     float SoE_percentage;
+    float V1;
     double remaining_pack_wh;    
     std::array<size_t, num_chips> consecutive_invalid_packet_counts;
     std::array<volt, num_cells> cell_voltages;
