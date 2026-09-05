@@ -734,4 +734,12 @@ struct VCRData_s
     FWVersionInfo fw_version_info;
 };
 
+struct EBSData_s
+{
+    bool pressure_heartbeat_ok;
+    unsigned long pressure_last_recv_millis;
+    uint32_t pressure_1;
+    uint32_t pressure_2;
+};
+
 #endif // __SHAREDFIRMWARETYPES_H__
