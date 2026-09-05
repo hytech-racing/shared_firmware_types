@@ -742,4 +742,15 @@ struct EBSData_s
     uint32_t pressure_2;
 };
 
+enum class DriverlessSystemState_e
+{
+    OFF = 0,
+    STARTUP_NO_TS = 1,
+    STARTUP_TS = 2,
+    READY = 3,
+    DRIVING = 4,
+    EMERGENCY = 5,
+    FINISHED = 6
+};
+
 #endif // __SHAREDFIRMWARETYPES_H__
