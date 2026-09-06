@@ -734,6 +734,11 @@ struct VCRData_s
     FWVersionInfo fw_version_info;
 };
 
+/**---------------------------------------------------
+ *              DRIVERLESS SHARED TYPES
+----------------------------------------------------*/
+
+// @brief struct with EBS pressure data and heartbeat information. 
 struct EBSData_s
 {
     bool pressure_heartbeat_ok;
@@ -742,6 +747,8 @@ struct EBSData_s
     uint32_t pressure_2;
 };
 
+
+// @brief enum class for DV system states
 enum class DriverlessSystemState_e
 {
     OFF = 0,
@@ -751,6 +758,17 @@ enum class DriverlessSystemState_e
     DRIVING = 4,
     EMERGENCY = 5,
     FINISHED = 6
+};
+
+
+enum class DriverlessMission_e
+{
+    OFF = 0,
+    ACCELERATION = 1,
+    SKIDPAD = 2,
+    AUTOCROSS = 3,
+    TRACKDRIVE = 4,
+    INESPECTION = 5
 };
 
 #endif // __SHAREDFIRMWARETYPES_H__
