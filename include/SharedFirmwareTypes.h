@@ -743,6 +743,8 @@ struct EBSData_s
 {
     bool pressure_heartbeat_ok;
     unsigned long pressure_last_recv_millis;
+    bool ebs_supervisor_ok;
+    bool ebs_engaged;
     uint32_t pressure_1;
     uint32_t pressure_2;
 };
