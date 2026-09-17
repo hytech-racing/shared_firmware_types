@@ -129,7 +129,7 @@ struct PedalSensorData_s
     uint32_t brake_2;
 };
 
-struct BrakeFluidPressureData_S
+struct BrakeFluidPressureData_s
 {
     uint16_t brake_fluid_pressure_data_1;
     uint16_t brake_fluid_pressure_data_2;
