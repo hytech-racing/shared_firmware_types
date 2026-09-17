@@ -129,6 +129,12 @@ struct PedalSensorData_s
     uint32_t brake_2;
 };
 
+struct BrakeFluidPressureData_S
+{
+    uint16_t brake_fluid_pressure_data_1;
+    uint16_t brake_fluid_pressure_data_2;
+};
+
 struct FrontLoadCellData_s
 {
     uint32_t FL_loadcell_analog;
@@ -743,7 +749,7 @@ struct EBSData_s
 {
     bool pressure_heartbeat_ok;
     unsigned long pressure_last_recv_millis;
-    bool ebs_supervisor_ok;
+    bool supervisor_ok;
     bool ebs_engaged;
     uint32_t pressure_1;
     uint32_t pressure_2;
@@ -755,13 +761,12 @@ enum class DriverlessSystemState_e
 {
     OFF = 0,
     STARTUP_NO_TS = 1,
-    STARTUP_TS = 2,
+    STARTUP_TS_ACTIVE = 2,
     READY = 3,
     DRIVING = 4,
     EMERGENCY = 5,
     FINISHED = 6
 };
-
 
 enum class DriverlessMission_e
 {
